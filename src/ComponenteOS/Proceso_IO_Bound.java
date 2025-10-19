@@ -1,0 +1,116 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package ComponenteOS;
+
+/**
+ *
+ * @author Andrés
+ */
+public class Proceso_IO_Bound{
+    private int inst_total;
+    private int inst_faltantes;
+    private int inst_per_IO;
+    private int inst_per_IO_faltante;    
+    private int inst_to_IO;
+    private int inst_to_IO_faltante;
+    private boolean complete;
+    private boolean StartInterrupt;
+    private int PC;
+    private int MAR;
+    
+    public Proceso_IO_Bound(int ins, int first_memory, int inst_per_io, int inst_to_io){
+        this.inst_total = ins;
+        this.complete = false;
+        this.inst_faltantes = this.inst_total;
+        this.inst_per_IO = inst_per_io;
+        this.inst_per_IO_faltante = this.inst_per_IO;
+        this.inst_to_IO = inst_to_io;
+        this.inst_to_IO_faltante = this.inst_to_IO;
+        
+
+    }
+    
+    public void updatecycles(){
+        this.inst_faltantes--;
+        this.inst_to_IO_faltante--;
+        PC++;
+        MAR++;
+        if(this.getInst_faltantes()==0){
+            this.complete = true;
+        }
+        if(this.getInst_to_IO_faltante()==0){
+            this.StartInterrupt = true;
+        }
+    }
+    
+    public void finishinterrupt(){
+        this.inst_to_IO_faltante = this.inst_to_IO;
+        this.StartInterrupt = false;
+    }
+    
+    public void IOwait(){
+        this.inst_per_IO_faltante--;
+        if(this.inst_per_IO_faltante==0){
+            
+        }
+    }
+
+    /**
+     * @return the complete
+     */
+    public boolean isComplete() {
+        return complete;
+    }
+
+    /**
+     * @return the PC
+     */
+    public int getPC() {
+        return PC;
+    }
+
+    /**
+     * @return the MAR
+     */
+    public int getMAR() {
+        return MAR;
+    }
+
+    /**
+     * @return the inst_faltantes
+     */
+    public int getInst_faltantes() {
+        return inst_faltantes;
+    }
+
+    /**
+     * @return the inst_to_IO
+     */
+    public int getInst_to_IO() {
+        return inst_to_IO;
+    }
+
+    /**
+     * @return the StartInterrupt
+     */
+    public boolean isStartInterrupt() {
+        return StartInterrupt;
+    }
+
+    /**
+     * @return the inst_per_IO_faltante
+     */
+    public int getInst_per_IO_faltante() {
+        return inst_per_IO_faltante;
+    }
+
+    /**
+     * @return the inst_to_IO_faltante
+     */
+    public int getInst_to_IO_faltante() {
+        return inst_to_IO_faltante;
+    }
+    
+}
