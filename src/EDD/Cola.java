@@ -46,6 +46,27 @@ public class Cola {
         size--;
         return n;
     }
+    
+    public Nodo get(String name){
+        Nodo n = this.pFirst;
+        Nodo a;
+        if(n == null){
+            return n;
+        }
+        if(n.getData().getName().equals(name)){
+            this.pFirst = this.pFirst.getpNext();
+            return n;
+        } 
+        while(n.getpNext()!=null){
+            if(n.getpNext().getData().getName().equals(name)){
+                a = n.getpNext();
+                n.setpNext(n.getpNext().getpNext());
+                return a;
+            }
+            n = n.getpNext();
+        }
+        return null;
+    }
 
     /**
      * @return the size

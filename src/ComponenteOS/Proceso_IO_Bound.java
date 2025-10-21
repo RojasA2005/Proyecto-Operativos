@@ -51,9 +51,11 @@ public class Proceso_IO_Bound{
     }
     
     public void IOwait(){
-        this.inst_per_IO_faltante--;
+        if(this.inst_per_IO_faltante>0){
+            this.inst_per_IO_faltante--;
+        }
         if(this.inst_per_IO_faltante==0){
-            
+            this.finishinterrupt();
         }
     }
 

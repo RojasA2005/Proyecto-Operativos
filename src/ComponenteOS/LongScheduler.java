@@ -4,15 +4,10 @@
  */
 package ComponenteOS;
 
-import EDD.Cola;
-
 /**
  *
  * @author Andrés
  */
-public class Scheduler {
-    int tipo; //Del 0 al 5, para cada tipo de organización
-    Cola ShortTerm;
-    Cola MidTerm;
-    Cola LongTerm;
+public class LongScheduler {
+    //No sé si eliminar esto
 }

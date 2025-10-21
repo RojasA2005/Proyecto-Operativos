@@ -10,7 +10,8 @@ package ComponenteOS;
  */
 public class PCB {
     private int id;
-    private int status; //Será un valor del 0 al 2, para determinar running, ready o blocked
+    private int status; //Será un valor del 0 al 4, para determinar running, ready o blocked
+    private boolean IsSuspended;
     private String name;
     private int PC;
     private int MAR;
@@ -44,6 +45,9 @@ public class PCB {
     public void updatewait(){
         if(this.ProcesoIO != null){
             this.ProcesoIO.IOwait();
+            if(this.ProcesoIO.getInst_per_IO_faltante()==0){
+                this.ProcesoIO.finishinterrupt();
+            }
         }
     }
     /**
@@ -100,5 +104,19 @@ public class PCB {
      */
     public void setMAR(int MAR) {
         this.MAR = MAR;
+    }
+
+    /**
+     * @return the IsSuspended
+     */
+    public boolean isIsSuspended() {
+        return IsSuspended;
+    }
+
+    /**
+     * @param IsSuspended the IsSuspended to set
+     */
+    public void setIsSuspended(boolean IsSuspended) {
+        this.IsSuspended = IsSuspended;
     }
 }
