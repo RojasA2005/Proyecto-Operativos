@@ -20,7 +20,7 @@ public class Proceso_IO_Bound{
     private int PC;
     private int MAR;
     
-    public Proceso_IO_Bound(int ins, int first_memory, int inst_per_io, int inst_to_io){
+    public Proceso_IO_Bound(int ins, int inst_per_io, int inst_to_io){
         this.inst_total = ins;
         this.complete = false;
         this.inst_faltantes = this.inst_total;
@@ -35,19 +35,19 @@ public class Proceso_IO_Bound{
     public void updatecycles(){
         this.inst_faltantes--;
         this.inst_to_IO_faltante--;
-        PC++;
+        setPC(getPC() + 1);
         MAR++;
         if(this.getInst_faltantes()==0){
             this.complete = true;
         }
         if(this.getInst_to_IO_faltante()==0){
-            this.StartInterrupt = true;
+            this.setStartInterrupt(true);
         }
     }
     
     public void finishinterrupt(){
         this.inst_to_IO_faltante = this.inst_to_IO;
-        this.StartInterrupt = false;
+        this.setStartInterrupt(false);
     }
     
     public void IOwait(){
@@ -113,6 +113,27 @@ public class Proceso_IO_Bound{
      */
     public int getInst_to_IO_faltante() {
         return inst_to_IO_faltante;
+    }
+
+    /**
+     * @param StartInterrupt the StartInterrupt to set
+     */
+    public void setStartInterrupt(boolean StartInterrupt) {
+        this.StartInterrupt = StartInterrupt;
+    }
+
+    /**
+     * @param PC the PC to set
+     */
+    public void setPC(int PC) {
+        this.PC = PC;
+    }
+
+    /**
+     * @param MAR the MAR to set
+     */
+    public void setMAR(int MAR) {
+        this.MAR = MAR;
     }
     
 }

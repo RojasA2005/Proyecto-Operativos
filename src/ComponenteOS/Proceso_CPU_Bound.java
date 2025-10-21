@@ -16,12 +16,10 @@ public class Proceso_CPU_Bound extends Thread {
     private int PC;
     private int MAR;
     
-    public Proceso_CPU_Bound(int ins, int first_memory){
+    public Proceso_CPU_Bound(int ins){
         this.inst_total = ins;
         this.inst_faltantes = this.inst_total;
         this.complete = false;
-        this.PC = first_memory;
-        this.MAR = first_memory;
     }
     
     public void updatecycles(){
@@ -49,6 +47,20 @@ public class Proceso_CPU_Bound extends Thread {
      */
     public int getMAR() {
         return MAR;
+    }
+
+    /**
+     * @param PC the PC to set
+     */
+    public void setPC(int PC) {
+        this.PC = PC;
+    }
+
+    /**
+     * @param MAR the MAR to set
+     */
+    public void setMAR(int MAR) {
+        this.MAR = MAR;
     }
     
 }

@@ -18,10 +18,12 @@ public class IOModulo extends Thread{
     private Lista IOlista;
     private int Time;
     Semaphore semaforo;
+    Interrupt Pausa;
     
-    public IOModulo(int Time){
+    public IOModulo(int Time, Interrupt P){
         this.IOlista = new Lista();
         this.Time = Time;
+        this.Pausa = P;
     }
     
     @Override
@@ -32,6 +34,9 @@ public class IOModulo extends Thread{
             while(n != null){
                 Thread.sleep(Time);
                 n.getData().updatewait();
+                if(n.getData().IOEnd() == false){
+                    this.Pausa.setHasInterrupt(true);
+                }
                 n = n.getpNext();
             }
         } catch (InterruptedException ex) {

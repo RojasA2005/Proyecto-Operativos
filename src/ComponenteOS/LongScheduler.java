@@ -4,10 +4,39 @@
  */
 package ComponenteOS;
 
+import EDD.Lista;
+import EDD.Nodo;
+
 /**
  *
  * @author Andrés
  */
 public class LongScheduler {
-    //No sé si eliminar esto
+    Lista Nuevos;
+    Lista Completados;
+    
+    public LongScheduler(){
+        this.Nuevos = new Lista();
+        this.Completados = new Lista();
+    }
+    
+    public void addNuevo(PCB Pn){
+        Nodo n = new Nodo(Pn);
+        this.Nuevos.add(n);
+    }
+    
+    public Lista vaciar(){
+        Lista l = this.Nuevos;
+        this.Nuevos = new Lista();
+        return l;
+    }
+    
+    public void addCompletado(PCB Pn){
+        Nodo n = new Nodo(Pn);
+        this.Completados.add(n);
+    }
+    
+    public Lista Completados(){
+        return this.Completados;
+    }
 }

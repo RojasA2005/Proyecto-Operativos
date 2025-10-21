@@ -9,8 +9,9 @@ package ComponenteOS;
  * @author Andrés
  */
 public class PCB {
-    private int id;
-    private int status; //Será un valor del 0 al 4, para determinar running, ready o blocked
+    private int id; //                                               0      1       2       3      4
+    private int status; //Será un valor del 0 al 4, para determinar new, running, ready, blocked, exit
+    private int ciclos;
     private boolean IsSuspended;
     private String name;
     private int PC;
@@ -18,18 +19,19 @@ public class PCB {
     private Proceso_CPU_Bound ProcesoCPU;
     private Proceso_IO_Bound ProcesoIO;
     
-    public PCB(int id, String name, int cycles, boolean IsCPUBound, int first_memory, int instrucciones, int ins_per_IO, int ins_to_io){
+    public PCB(int id, String name, int cycles, boolean IsCPUBound, int first_memory, int ins_per_IO, int ins_to_io){
         status = 1; //Inicializa como ready
         PC = 0; //Inicializa como 0
         MAR = 0; //Igual
         this.name = name;
+        this.ciclos = cycles;
         this.id = id;
         if(IsCPUBound == true){
             this.ProcesoIO = null;
-            this.ProcesoCPU = new Proceso_CPU_Bound(instrucciones, first_memory);
+            this.ProcesoCPU = new Proceso_CPU_Bound(cycles);
         } else{
             this.ProcesoCPU = null;
-            this.ProcesoIO = new Proceso_IO_Bound(instrucciones, first_memory, ins_per_IO, ins_to_io);
+            this.ProcesoIO = new Proceso_IO_Bound(cycles, ins_per_IO, ins_to_io);
         }
         
     }
@@ -49,6 +51,17 @@ public class PCB {
                 this.ProcesoIO.finishinterrupt();
             }
         }
+    }
+    
+    public boolean IOEnd(){
+        if(this.ProcesoIO != null){
+            return this.ProcesoIO.isStartInterrupt();
+        }
+        return false;
+    }
+    
+    public int GetCiclos(){
+        return this.ciclos;
     }
     /**
      * @return the id

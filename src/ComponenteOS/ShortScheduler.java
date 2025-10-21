@@ -5,6 +5,7 @@
 package ComponenteOS;
 
 import EDD.Cola;
+import EDD.Nodo;
 
 /**
  *
@@ -17,14 +18,20 @@ public class ShortScheduler {
     IOModulo Bloqueados;
     PCB running;
     MidScheduler Suspended;
+    Interrupt Pausa;
+    int Memoria;
+    int MemDisponible;
     
-    public ShortScheduler(int Time){
+    public ShortScheduler(int Time, Interrupt P, int Memoria){
         this.running = null;
         this.Ready = new Cola();
         this.LRU = new Cola();
-        this.Bloqueados = new IOModulo(Time);
+        this.Bloqueados = new IOModulo(Time, P);
         this.tipo = 0;
         this.Suspended = new MidScheduler();
+        this.Pausa = P;
+        this.Memoria = Memoria;
+        this.MemDisponible = Memoria;
     }
     
     public PCB choose(){
@@ -54,7 +61,13 @@ public class ShortScheduler {
     }
     
     public void add(PCB Pn){
-        
+        Nodo n = new Nodo(Pn);
+        if(this.MemDisponible >= Pn.GetCiclos()){
+            this.Ready.queue(n);
+            this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
+        } else {
+            this.Suspended.add(Pn);
+        }
     }
 
 }
