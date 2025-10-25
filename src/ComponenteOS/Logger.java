@@ -24,7 +24,7 @@ public class Logger {
         try {
             this.writer = new BufferedWriter (new FileWriter("Simulacion_log.txt", true));
             this.formatter = DateTimeFormatter.ofPattern("E MMM DD YYYY HH:mm:ss.SSS"); 
-             logEvent("Simulación iniciada");
+             LogEvent("Simulación iniciada");
         }   catch (IOException e) {
                 e.printStackTrace();
         }
@@ -34,7 +34,7 @@ public class Logger {
             instance = new Logger(); 
         }
         return instance(); 
-}
+    }
     public synchronized void LogEvent (String message) {
         try {
             String timestamp = LocalDateTime.now().format(formatter); 
@@ -45,48 +45,48 @@ public class Logger {
         }
     }
     public void logProcesoSeleccionado(int id, String nombre, String algoritmo) {
-        logEvent(String.format("Proceso %d (%s) seleccionado usando el algoritmo %s", id, nombre, algoritmo));
+        LogEvent(String.format("Proceso %d (%s) seleccionado usando el algoritmo %s", id, nombre, algoritmo));
     }
 
     public void logCambioEstado(int id, String nombre, String estadoAnterior, String estadoNuevo) {
-        logEvent(String.format("Proceso %d (%s) cambió de estado: %s → %s", id, nombre, estadoAnterior, estadoNuevo));
+        LogEvent(String.format("Proceso %d (%s) cambió de estado: %s → %s", id, nombre, estadoAnterior, estadoNuevo));
     }
 
     public void logProcesoCompletado(int id, String nombre, int rafagaTotal) {
-        logEvent(String.format("Proceso %d (%s) completó su ejecución. Ráfaga total: %d", id, nombre, rafagaTotal));
+        LogEvent(String.format("Proceso %d (%s) completó su ejecución. Ráfaga total: %d", id, nombre, rafagaTotal));
     }
 
     public void logInicioIO(int id, String nombre) {
-        logEvent(String.format("Proceso %d (%s) inició operación de E/S", id, nombre));
+        LogEvent(String.format("Proceso %d (%s) inició operación de E/S", id, nombre));
     }
 
     public void logFinIO(int id, String nombre) {
-        logEvent(String.format("Proceso %d (%s) finalizó operación de E/S", id, nombre));
+        LogEvent(String.format("Proceso %d (%s) finalizó operación de E/S", id, nombre));
     }
 
     public void logProcesoExpropiado(int id, String nombre, String razon) {
-        logEvent(String.format("Proceso %d (%s) fue expropiado. Razón: %s", id, nombre, razon));
+        LogEvent(String.format("Proceso %d (%s) fue expropiado. Razón: %s", id, nombre, razon));
     }
 
     public void logCPUInactiva(int disponibles, int total) {
-        logEvent(String.format("CPU inactiva. %d de %d disponibles", disponibles, total));
+        LogEvent(String.format("CPU inactiva. %d de %d disponibles", disponibles, total));
     }
 
     public void logCambioQuantum(String quantumAnterior, String quantumNuevo) {
-        logEvent(String.format("Quantum cambiado de %s a %s", quantumAnterior, quantumNuevo));
+        LogEvent(String.format("Quantum cambiado de %s a %s", quantumAnterior, quantumNuevo));
     }
 
     public void logQuantumExpirado(int id, String nombre) {
-        logEvent(String.format("Proceso %d (%s) agotó su quantum, movido a la cola de listos", id, nombre));
+        LogEvent(String.format("Proceso %d (%s) agotó su quantum, movido a la cola de listos", id, nombre));
     }
 
     public void logProcesoGenerado(int idPadre, String nombrePadre, int idHijo, String nombreHijo) {
-        logEvent(String.format("Proceso %d (%s) generó al proceso %d (%s)", idPadre, nombrePadre, idHijo, nombreHijo));
+        LogEvent(String.format("Proceso %d (%s) generó al proceso %d (%s)", idPadre, nombrePadre, idHijo, nombreHijo));
     }
     
     public void close() {
             try{
-                logEvent("SIMULACION TERMINADA\n");
+                LogEvent("SIMULACION TERMINADA\n");
                 if (writer != null) {
                     writer.close(); 
                 } 

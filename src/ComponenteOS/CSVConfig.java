@@ -4,6 +4,12 @@
  */
 package ComponenteOS;
 
+import java.io.FileReader;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,14 +23,14 @@ public class CSVConfig {
     private static final String CONFIG_FILE = "simulacion_config.csv"; 
     private Map<String, String> configMap; 
     
-    public ConfigManager() {
+    public CSV() {
         this.configMap = new HashMap<>(); 
     }
     
-    public void cargarConfiguracion(){
+    public void cargarConfiguracion() throws IOException{
         configMap.clear(); 
         
-        try (BuferredReader reader = new BuferedReader(new FileReader(CONFIG_FILE))){
+        try (BufferedReader reader = new BufferedReader(new FileReader(CONFIG_FILE))){
             String line; 
             while ((line=reader.readLine()) != null) {
                 if (line.trim().isEmpty() || line.startsWith("#")){
@@ -43,11 +49,11 @@ public class CSVConfig {
             System.out.println("Archivo de configuracion no encontrado. Se usaran valores por defecto");
             crearConfiguracionPorDefecto(); 
         } catch (IOException e) {
-            System.err.println("Error al leer: " + e.getMessege());
+            System.err.println("Error al leer: " + e.getMessage());
         }
     }
     
-    public void guardarConfiguracion(){
+    public void guardarConfiguracion() throws IOException{
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(CONFIG_FILE))){
             writer.write("# Configuracion del Simulador de Planificación");
             writer.newLine(); 
@@ -59,12 +65,13 @@ public class CSVConfig {
                 writer.write(entry.getKey() + "," + entry.getValue());
                 writer.newLine();
         }
+        }catch (IOException e){
             
             System.err.println("Error al guardar configuración" + e.getMessage());
         }
     }
     
-    public void crearConfiguracionPorDefecto(){
+    public void crearConfiguracionPorDefecto() throws IOException{
         configMap.put("cycle_time_ms", "1000");
         configMap.put("memory_size_mb", "1024");
         configMap.put("scheduling_algorithm", "0");
