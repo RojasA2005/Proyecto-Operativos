@@ -3,21 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< Updated upstream
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ComponenteOS/Proceso_CPU_Bound.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/sistemamonoprocesador/SistemaMonoprocesador.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ExecutionTypes/FIFO.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ComponenteOS/IOModulo.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/EDD/Cola.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ComponenteOS/PCB.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ExecutionTypes/RoundRobin.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/EDD/Lista.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ComponenteOS/Proceso_IO_Bound.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/ComponenteOS/CPU.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/src/EDD/Nodo.java</file>
-=======
-            <file>file:/C:/Users/Massi/OneDrive/Desktop/uni/Proyecto-Operativos/src/sistemamonoprocesador/SistemaMonoprocesador.java</file>
->>>>>>> Stashed changes
+            <file>file:/C:/Users/Massi/OneDrive/Desktop/uni/Proyecto-Operativos/src/ComponenteOS/Logger.java</file>
+            <file>file:/C:/Users/Massi/OneDrive/Desktop/uni/Proyecto-Operativos/src/ComponenteOS/CSVConfig.java</file>
+            <file>file:/C:/Users/Massi/OneDrive/Desktop/uni/Proyecto-Operativos/src/ComponenteOS/CargarCSV.java</file>
+            <file>file:/C:/Users/Massi/OneDrive/Desktop/uni/Proyecto-Operativos/src/ComponenteOS/Grafica.java</file>
         </group>
     </open-files>
 </project-private>
