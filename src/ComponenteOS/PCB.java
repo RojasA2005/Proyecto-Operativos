@@ -42,8 +42,21 @@ public class PCB {
     public void update(){
         if(this.ProcesoCPU==null){
             this.ProcesoIO.updatecycles();
+            if(this.ProcesoIO.isStartInterrupt()){
+                this.status = 3;
+            }
         } else{
             this.ProcesoCPU.updatecycles();
+        }
+    }
+    
+    public void getPCandMAR(){
+        if(this.ProcesoCPU==null){
+            this.PC = this.ProcesoIO.getPC();
+            this.MAR = this.ProcesoIO.getMAR();            
+        } else{
+            this.PC = this.ProcesoCPU.getPC();
+            this.MAR = this.ProcesoCPU.getMAR();  
         }
     }
     
@@ -106,6 +119,11 @@ public class PCB {
      */
     public void setPC(int PC) {
         this.PC = PC;
+         if(this.ProcesoCPU==null){
+            this.ProcesoIO.setPC(PC);
+        } else{
+            this.ProcesoCPU.setPC(PC);
+        }
     }
 
     /**
@@ -120,6 +138,11 @@ public class PCB {
      */
     public void setMAR(int MAR) {
         this.MAR = MAR;
+         if(this.ProcesoCPU==null){
+            this.ProcesoIO.setMAR(MAR);
+        } else{
+            this.ProcesoCPU.setMAR(MAR);
+        }
     }
 
     /**

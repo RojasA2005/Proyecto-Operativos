@@ -53,19 +53,35 @@ public class IOModulo extends Thread{
     }
     
     public Lista quitar(){
+        this.EliminarSuspended();
         Lista l = new Lista();
         Nodo n = this.IOlista.getFirst();
         Nodo m;
         while(n!=null){
-        if(n.getData().IOEnd()==true){
+        if(n.getData().IOEnd()==false && n.getData().isIsSuspended()==false){
             m = n.getpNext();
-            this.IOlista.eliminate(m.getData().getName());
-            l.add(m);
+            this.IOlista.eliminate(n.getData().getName());
+            l.add(n);
+            n = m;
             continue;
         }
         n = n.getpNext();
         }
         return l;
+    }
+    
+    public void EliminarSuspended(){
+        Nodo n = this.IOlista.getFirst();
+        Nodo m;
+        while(n!=null){
+        if(n.getData().IOEnd()==false && n.getData().isIsSuspended()==true){
+            m = n.getpNext();
+            this.IOlista.eliminate(n.getData().getName());
+            n = m;
+            continue;
+        }
+        n = n.getpNext();
+        }
     }
 
     /**

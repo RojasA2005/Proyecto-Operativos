@@ -5,6 +5,7 @@
 package ExecutionTypes;
 
 import ComponenteOS.Interrupt;
+import ComponenteOS.PCB;
 import EDD.Cola;
 import EDD.ColaMultinivel;
 import EDD.Nodo;
@@ -59,6 +60,14 @@ public class FeedBack extends Thread{
             this.pFirst = this.pFirst.getpNext();
         }
         return n;
+    }
+    
+    public void quitar(PCB Pn){
+        ColaMultinivel iter = this.pFirst;
+        while(iter!=null){
+            iter.getData().Eliminate(Pn);
+            iter = iter.getpNext();
+        }
     }
     
     @Override

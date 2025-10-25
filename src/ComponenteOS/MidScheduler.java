@@ -16,8 +16,10 @@ public class MidScheduler {
     Lista BlockedSuspend;
     Lista ReadySuspend;
     Cola AllSuspended;
+    private int size;
     
     public MidScheduler(){
+        size = 0;
         this.BlockedSuspend = new Lista();
         this.ReadySuspend = new Lista();
         this.AllSuspended = new Cola();
@@ -31,6 +33,7 @@ public class MidScheduler {
         } else{
             this.AddReadySuspend(Pn);
         }
+        size++;
     }
     
     private void AddBlockedSuspend(PCB Pn){
@@ -41,7 +44,7 @@ public class MidScheduler {
     public void MigrateToReady(){
         Nodo n = this.BlockedSuspend.getFirst();
         while(n != null){
-            if(n.getData().isIsSuspended()==false){
+            if(n.getData().IOEnd()==true){
                 this.BlockedSuspend.eliminate(n.getData().getName());
                 n.setpNext(null);
                 this.ReadySuspend.add(n);
@@ -55,6 +58,9 @@ public class MidScheduler {
     }
     
     public PCB quitar(){
+        if(getSize() > 0){
+            size--;
+        }
         Nodo n = this.AllSuspended.dequeue();
         if(n != null){
             this.BlockedSuspend.eliminate(n.getData().getName());
@@ -62,5 +68,12 @@ public class MidScheduler {
             return n.getData();
         }
         return null;
+    }
+
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
     }
 }

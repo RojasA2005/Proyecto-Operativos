@@ -43,6 +43,10 @@ public class ShortScheduler {
     public Nodo choose(){
         Nodo respuesta = null;
         this.running = this.E.Execute();
+        if(this.running != null){
+            this.LRU.Eliminate(this.running.getData());
+            this.LRU.queue(new Nodo(this.running.getData()));
+        }
         return respuesta;
     }
     
@@ -53,10 +57,52 @@ public class ShortScheduler {
     public void add(PCB Pn){
         Nodo n = new Nodo(Pn);
         if(this.MemDisponible >= Pn.GetCiclos()){
-            this.Ready.queue(n);
+            this.E.Añadir(n);
             this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
         } else {
-            this.Suspended.add(Pn);
+            while(this.MemDisponible < Pn.GetCiclos()){
+                this.MoverASuspended();
+            }
+            this.E.Añadir(n);
+            this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
+        }
+        this.LRU.queue(new Nodo(Pn));
+    }
+    
+    public void MoverSuspendedANoSuspended(){
+        int i = this.Suspended.getSize();
+        PCB Pn = null;
+        while(i > 0){
+            Pn = this.Suspended.quitar();
+            if(this.MemDisponible >= Pn.GetCiclos()){
+                if(Pn.getStatus()!=3){
+                    this.E.Añadir(new Nodo(Pn));
+                } else{
+                
+                }
+                this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
+                Pn.setMAR(this.MemDisponible);
+                Pn.setPC(this.MemDisponible);
+                Pn.setIsSuspended(false);
+                this.LRU.queue(new Nodo(Pn));
+            } else{
+                this.Suspended.add(Pn);
+            }
+            i--;
+        }
+    }
+    
+    public void MoverASuspended(){
+        Nodo n = this.LRU.dequeue();
+        this.E.Eliminar(n.getData());
+        this.LiberarMemoria(n.getData());
+        this.Suspended.add(n.getData());
+    }
+    
+    public void LiberarMemoria(PCB Pn){
+        this.MemDisponible = this.MemDisponible + Pn.GetCiclos();
+        if(this.MemDisponible > this.Memoria){ //Caso extremo
+            this.MemDisponible = this.Memoria;
         }
     }
     
@@ -65,6 +111,7 @@ public class ShortScheduler {
     }
     
     public void MoverBlockedAReady(){
+        this.Suspended.MigrateToReady();
         this.S.waitSem();
         Lista l = this.Bloqueados.quitar();
         this.S.signal();

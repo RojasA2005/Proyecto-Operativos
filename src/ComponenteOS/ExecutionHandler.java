@@ -95,6 +95,14 @@ public class ExecutionHandler {
         }
         
     }
+    
+    public void Eliminar(PCB Pn){
+        if(type==6){
+            this.feed.quitar(Pn);
+        } else{
+            this.listo.Eliminate(Pn);
+        }
+    }
 
     /**
      * @return the type

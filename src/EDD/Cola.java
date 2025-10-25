@@ -4,6 +4,8 @@
  */
 package EDD;
 
+import ComponenteOS.PCB;
+
 /**
  *
  * @author Andrés
@@ -66,6 +68,20 @@ public class Cola {
             n = n.getpNext();
         }
         return null;
+    }
+    
+    public void Eliminate(PCB Pn){
+         Nodo n = this.pFirst;
+        if(n.getData() == Pn){
+            pFirst = pFirst.getpNext();
+        } else{
+            while(n != null){
+                if(n.getpNext().getData() == Pn){
+                    n.setpNext(n.getpNext().getpNext());
+                }
+                n = n.getpNext();
+            }
+        }
     }
 
     /**

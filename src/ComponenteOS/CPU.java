@@ -39,11 +39,13 @@ public class CPU extends Thread{
         while(Working){
             if(this.Pausa.isHasInterrupt()){
                 if(this.Pausa.isProcessSwitch()){
+                    this.running.getPCandMAR();
                     Nodo n = this.Scheduler.choose();
                     this.running = n.getData();
                     this.running.setStatus(1);
                 } else{
                     this.Scheduler.MoverBlockedAReady();
+                    this.Scheduler.MoverSuspendedANoSuspended();
                 }
             }
             while(running.getRemaining_cycles()>0){
@@ -53,7 +55,7 @@ public class CPU extends Thread{
                     Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 running.update();
-                if(running.isIsSuspended()){
+                if(running.getStatus()==3){
                     this.Scheduler.MoverRunningABlocked(running);
                     this.Pausa.setHasInterrupt(true);
                     this.Pausa.setProcessSwitch(true);
@@ -78,6 +80,7 @@ public class CPU extends Thread{
     }
     
     public void MoverRunningAExit(){
+        this.Scheduler.LiberarMemoria(running);
         this.Long.addCompletado(running);
         this.Pausa.setHasInterrupt(true);
         this.Pausa.setProcessSwitch(true);
