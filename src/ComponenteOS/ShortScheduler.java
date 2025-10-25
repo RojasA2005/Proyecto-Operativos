@@ -5,7 +5,9 @@
 package ComponenteOS;
 
 import EDD.Cola;
+import EDD.Lista;
 import EDD.Nodo;
+import EDD.Semaforo;
 
 /**
  *
@@ -16,17 +18,21 @@ public class ShortScheduler {
     Cola Ready;
     Cola LRU;
     IOModulo Bloqueados;
-    PCB running;
+    Nodo running;
     MidScheduler Suspended;
     Interrupt Pausa;
     int Memoria;
     int MemDisponible;
+    Semaforo S;
+    ExecutionHandler E;
     
     public ShortScheduler(int Time, Interrupt P, int Memoria){
         this.running = null;
         this.Ready = new Cola();
         this.LRU = new Cola();
-        this.Bloqueados = new IOModulo(Time, P);
+        this.S = new Semaforo(1);
+        this.Bloqueados = new IOModulo(Time, P, S);
+        this.E = new ExecutionHandler(this.Ready, P);
         this.tipo = 0;
         this.Suspended = new MidScheduler();
         this.Pausa = P;
@@ -34,30 +40,14 @@ public class ShortScheduler {
         this.MemDisponible = Memoria;
     }
     
-    public PCB choose(){
-        PCB respuesta = null;
-        switch(tipo){
-            case 0:
-                
-                break;
-            case 1:
-                
-                break;
-            case 2:
-                
-                break;
-            case 3:
-                
-                break;
-            case 4:
-                
-                break;
-            case 5:
-                
-                break;
-        }
-        this.running = respuesta;
+    public Nodo choose(){
+        Nodo respuesta = null;
+        this.running = this.E.Execute();
         return respuesta;
+    }
+    
+    public void initialize(int t){
+        this.E.Initialize(t);
     }
     
     public void add(PCB Pn){
@@ -70,8 +60,20 @@ public class ShortScheduler {
         }
     }
     
-    public void MoverBlockedAReady(){
-        
+    public void MoverRunningABlocked(PCB Pn){
+        this.Bloqueados.add(Pn);
     }
+    
+    public void MoverBlockedAReady(){
+        this.S.waitSem();
+        Lista l = this.Bloqueados.quitar();
+        this.S.signal();
+        Nodo n = l.getFirst();
+        while(n != null){
+            this.E.Añadir(n);
+            n = n.getpNext();
+        }
+    }
+
 
 }

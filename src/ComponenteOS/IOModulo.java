@@ -6,7 +6,7 @@ package ComponenteOS;
 
 import EDD.Lista;
 import EDD.Nodo;
-import java.util.concurrent.Semaphore;
+import EDD.Semaforo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,18 +17,20 @@ import java.util.logging.Logger;
 public class IOModulo extends Thread{
     private Lista IOlista;
     private int Time;
-    Semaphore semaforo;
+    Semaforo S;
     Interrupt Pausa;
     
-    public IOModulo(int Time, Interrupt P){
+    public IOModulo(int Time, Interrupt P, Semaforo S){
         this.IOlista = new Lista();
         this.Time = Time;
         this.Pausa = P;
+        this.S = S;
     }
     
     @Override
     public void run(){
-        Nodo n = null;
+        Nodo n;
+        S.waitSem();
         try {
             n = this.IOlista.getFirst();
             while(n != null){
@@ -42,6 +44,7 @@ public class IOModulo extends Thread{
         } catch (InterruptedException ex) {
             Logger.getLogger(IOModulo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        S.signal();
     }
     
     public void add(PCB Pn){
@@ -49,13 +52,20 @@ public class IOModulo extends Thread{
         this.IOlista.add(n);
     }
     
-    public PCB quitar(String name){
-        Nodo n = this.IOlista.search(name);
-        this.IOlista.eliminate(name);
-        if(n != null){
-            return n.getData();
+    public Lista quitar(){
+        Lista l = new Lista();
+        Nodo n = this.IOlista.getFirst();
+        Nodo m;
+        while(n!=null){
+        if(n.getData().IOEnd()==true){
+            m = n.getpNext();
+            this.IOlista.eliminate(m.getData().getName());
+            l.add(m);
+            continue;
         }
-        return null;
+        n = n.getpNext();
+        }
+        return l;
     }
 
     /**

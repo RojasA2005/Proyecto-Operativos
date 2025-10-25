@@ -6,6 +6,8 @@ package ComponenteOS;
 
 import EDD.Lista;
 import EDD.Nodo;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,6 +20,8 @@ public class CPU extends Thread{
     LongScheduler Long;
     Interrupt Pausa;
     int procesoid;
+    PCB running;
+    boolean Working;
     
     
     public CPU(int Time, int Memoria){
@@ -27,11 +31,35 @@ public class CPU extends Thread{
         this.Scheduler = new ShortScheduler(Time, this.Pausa, Memoria);
         this.Long = new LongScheduler();
         this.procesoid = 0;
+        this.Working = false;
     }
     
     @Override
     public void run(){
-        
+        while(Working){
+            if(this.Pausa.isHasInterrupt()){
+                if(this.Pausa.isProcessSwitch()){
+                    Nodo n = this.Scheduler.choose();
+                    this.running = n.getData();
+                    this.running.setStatus(1);
+                } else{
+                    this.Scheduler.MoverBlockedAReady();
+                }
+            }
+            while(running.getRemaining_cycles()>0){
+                try {
+                    Thread.sleep(this.Time_per_cycle);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                running.update();
+                if(running.isIsSuspended()){
+                    this.Scheduler.MoverRunningABlocked(running);
+                    this.Pausa.setHasInterrupt(true);
+                    this.Pausa.setProcessSwitch(true);
+                }
+            }
+        }
     }
     
     public void CrearProceso(boolean isCPUBound, String name, int ciclos, int ciclos_para_IO, int ciclos_por_interrupcion){
@@ -47,6 +75,12 @@ public class CPU extends Thread{
             this.Scheduler.add(n.getData());
             n = n.getpNext();
         }
+    }
+    
+    public void MoverRunningAExit(){
+        this.Long.addCompletado(running);
+        this.Pausa.setHasInterrupt(true);
+        this.Pausa.setProcessSwitch(true);
     }
 
     /**

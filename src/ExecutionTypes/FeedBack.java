@@ -23,14 +23,20 @@ public class FeedBack extends Thread{
     
     public FeedBack(Cola l, Interrupt P, int t){
         this.name = "FeedBack";
-        this.pFirst = new ColaMultinivel(l);
+        Cola copy = new Cola();
+        Nodo m = l.peek();
+        while(m != null){
+            copy.queue(new Nodo(m.getData()));
+            m = m.getpNext();
+        }
+        this.pFirst = new ColaMultinivel(copy);
         this.Pausa = P;
         this.quantum = t;
         Nodo n = this.pFirst.getData().peek();
         while(n != null){
             n.setContador(0);
             n = n.getpNext();
-        }
+        } //esto se podría eliminar, chequear despues
     }
     
     public void Agregar(Nodo n){
@@ -47,7 +53,7 @@ public class FeedBack extends Thread{
         C.getData().queue(n);
     }
     
-    public Nodo Choose(){
+    public Nodo choose(){
         Nodo n = this.pFirst.getData().dequeue();
         if(this.pFirst.getData().getSize()==0){
             this.pFirst = this.pFirst.getpNext();

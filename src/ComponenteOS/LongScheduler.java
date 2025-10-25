@@ -32,6 +32,7 @@ public class LongScheduler {
     }
     
     public void addCompletado(PCB Pn){
+        Pn.setStatus(4);
         Nodo n = new Nodo(Pn);
         this.Completados.add(n);
     }
