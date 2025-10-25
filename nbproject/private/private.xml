@@ -3,15 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/CPU.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ExecutionTypes/FIFO.java</file>
             <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/Proceso_IO_Bound.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/LongScheduler.java</file>
             <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/EDD/Cola.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/ShortScheduler.java</file>
             <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/IOModulo.java</file>
             <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/PCB.java</file>
-            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/Interrupt.java</file>
             <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/MidScheduler.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ExecutionTypes/RoundRobin.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/EDD/Nodo.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/CPU.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ExecutionTypes/FeedBack.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/LongScheduler.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/ShortScheduler.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/EDD/ColaMultinivel.java</file>
+            <file>file:/C:/Users/Andrés/Documents/NetBeansProjects/SistemaMonoprocesador/Proyecto-Operativos/src/ComponenteOS/Interrupt.java</file>
         </group>
     </open-files>
 </project-private>

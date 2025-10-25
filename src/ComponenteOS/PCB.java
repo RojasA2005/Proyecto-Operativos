@@ -12,6 +12,7 @@ public class PCB {
     private int id; //                                               0      1       2       3      4
     private int status; //Será un valor del 0 al 4, para determinar new, running, ready, blocked, exit
     private int ciclos;
+    private int remaining_cycles;
     private boolean IsSuspended;
     private String name;
     private int PC;
@@ -20,7 +21,7 @@ public class PCB {
     private Proceso_IO_Bound ProcesoIO;
     
     public PCB(int id, String name, int cycles, boolean IsCPUBound, int first_memory, int ins_per_IO, int ins_to_io){
-        status = 1; //Inicializa como ready
+        status = 0; //Inicializa como new
         PC = 0; //Inicializa como 0
         MAR = 0; //Igual
         this.name = name;
@@ -33,6 +34,8 @@ public class PCB {
             this.ProcesoCPU = null;
             this.ProcesoIO = new Proceso_IO_Bound(cycles, ins_per_IO, ins_to_io);
         }
+        this.IsSuspended = false;
+        this.remaining_cycles = cycles;
         
     }
     
@@ -131,5 +134,19 @@ public class PCB {
      */
     public void setIsSuspended(boolean IsSuspended) {
         this.IsSuspended = IsSuspended;
+    }
+
+    /**
+     * @return the remaining_cycles
+     */
+    public int getRemaining_cycles() {
+        return remaining_cycles;
+    }
+
+    /**
+     * @param remaining_cycles the remaining_cycles to set
+     */
+    public void setRemaining_cycles(int remaining_cycles) {
+        this.remaining_cycles = remaining_cycles;
     }
 }

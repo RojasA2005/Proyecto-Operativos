@@ -4,22 +4,22 @@
  */
 package ExecutionTypes;
 
+import EDD.Cola;
+import EDD.Nodo;
+
 /**
  *
  * @author Andrés
  */
 public class FIFO {
-    private boolean change;
-
-    /**
-     * @param change the change to set
-     */
-    public void setChange(boolean change) {
-        this.change = change;
+    private Cola Listos;
+    
+    public FIFO(Cola l){
+        this.Listos = l;
     }
     
-    public FIFO(){
-        change = false;
+    public Nodo choose(){
+        return this.Listos.dequeue();
     }
     
     

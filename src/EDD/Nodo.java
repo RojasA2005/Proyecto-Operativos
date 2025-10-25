@@ -14,9 +14,12 @@ import ComponenteOS.PCB;
 public class Nodo {
     private PCB Data;
     private Nodo pNext;
+    private int Contador; //Para feedback y para hcns
+    private int R; //Solo para hrrn
     
     public Nodo(PCB P){
         this.Data = P;
+        this.Contador = 0;
     }
 
     /**
@@ -38,5 +41,33 @@ public class Nodo {
      */
     public void setpNext(Nodo pNext) {
         this.pNext = pNext;
+    }
+
+    /**
+     * @return the Contador
+     */
+    public int getContador() {
+        return Contador;
+    }
+
+    /**
+     * @param Contador the Contador to set
+     */
+    public void setContador(int Contador) {
+        this.Contador = Contador;
+    }
+
+    /**
+     * @return the R
+     */
+    public int getR() {
+        return R;
+    }
+
+    /**
+     * @param R the R to set
+     */
+    public void setR() {
+        this.R = (this.Contador + this.Data.getRemaining_cycles())/this.Data.getRemaining_cycles();
     }
 }

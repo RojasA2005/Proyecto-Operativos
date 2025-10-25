@@ -10,9 +10,11 @@ package ComponenteOS;
  */
 public class Interrupt {
     private boolean HasInterrupt;
+    private boolean ProcessSwitch;
     
     public Interrupt(){
         this.HasInterrupt = false;
+        this.ProcessSwitch = false;
     }
     
     /**
@@ -27,6 +29,20 @@ public class Interrupt {
      */
     public void setHasInterrupt(boolean HasInterrupt) {
         this.HasInterrupt = HasInterrupt;
+    }
+
+    /**
+     * @return the ProcessSwitch
+     */
+    public boolean isProcessSwitch() {
+        return ProcessSwitch;
+    }
+
+    /**
+     * @param ProcessSwitch the ProcessSwitch to set
+     */
+    public void setProcessSwitch(boolean ProcessSwitch) {
+        this.ProcessSwitch = ProcessSwitch;
     }
     
     
