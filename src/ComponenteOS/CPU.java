@@ -52,6 +52,7 @@ public class CPU extends Thread{
                 this.Pausa.setProcessSwitch(true);
             }
             if(this.Pausa.isHasInterrupt()){
+                System.out.println("Sistema Operativo en Ejecución");
                 if(this.Pausa.isProcessSwitch()){  
                     n = this.Scheduler.choose();
                     if(this.running!=null){
@@ -77,7 +78,8 @@ public class CPU extends Thread{
                 this.Pausa.setProcessSwitch(false);
             }
             if(running!=null){
-                if(running.getRemaining_cycles()>0){         
+                if(running.getRemaining_cycles()>0){
+                    System.out.println("Proceso en Ejecución");
                     try {
                         Thread.sleep(this.Time_per_cycle);
                     } catch (InterruptedException ex) {

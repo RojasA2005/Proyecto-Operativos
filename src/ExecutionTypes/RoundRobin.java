@@ -29,7 +29,6 @@ public class RoundRobin extends Thread{
     @Override
     public void run(){
         while(true){
-            System.out.println(this.Pausa.isQuantumWorking());
             if(this.Pausa.isQuantumWorking() == true){            
                 try {
                     Thread.sleep(quantum);

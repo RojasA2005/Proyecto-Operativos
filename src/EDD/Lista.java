@@ -50,12 +50,14 @@ public class Lista {
     
     public void eliminate(String name){
         Nodo n = this.pFirst;
+        if(n==null){return;}
         if(n.getData().getName().equals(name) && n != null){
             pFirst = pFirst.getpNext();
         } else{
             while(n != null){
                 if(n.getpNext().getData().getName().equals(name)){
                     n.setpNext(n.getpNext().getpNext());
+                    return;
                 }
                 n = n.getpNext();
             }
