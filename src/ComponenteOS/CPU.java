@@ -98,6 +98,7 @@ public class CPU extends Thread{
      */
     public void setTime_per_cycle(int Time_per_cycle) {
         this.Time_per_cycle = Time_per_cycle;
+        this.Scheduler.setTime(Time_per_cycle);
     }
 
     /**

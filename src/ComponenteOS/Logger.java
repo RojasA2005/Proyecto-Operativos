@@ -15,6 +15,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Massi
  */
+/*
 public class Logger {
     private BufferedWriter writer; 
     private DateTimeFormatter formatter; 
@@ -96,4 +97,4 @@ public class Logger {
     }
 }
 
-
+*/

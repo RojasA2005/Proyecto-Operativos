@@ -21,10 +21,11 @@ public class ShortScheduler {
     Nodo running;
     MidScheduler Suspended;
     Interrupt Pausa;
-    int Memoria;
-    int MemDisponible;
+    private int Memoria;
+    private int MemDisponible;
     Semaforo S;
     ExecutionHandler E;
+    private int Time;
     
     public ShortScheduler(int Time, Interrupt P, int Memoria){
         this.running = null;
@@ -58,13 +59,13 @@ public class ShortScheduler {
         Nodo n = new Nodo(Pn);
         if(this.MemDisponible >= Pn.GetCiclos()){
             this.E.Añadir(n);
-            this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
+            this.setMemDisponible(this.MemDisponible - Pn.GetCiclos());
         } else {
             while(this.MemDisponible < Pn.GetCiclos()){
                 this.MoverASuspended();
             }
             this.E.Añadir(n);
-            this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
+            this.setMemDisponible(this.MemDisponible - Pn.GetCiclos());
         }
         this.LRU.queue(new Nodo(Pn));
     }
@@ -80,7 +81,7 @@ public class ShortScheduler {
                 } else{
                 
                 }
-                this.MemDisponible = this.MemDisponible - Pn.GetCiclos();
+                this.setMemDisponible(this.MemDisponible - Pn.GetCiclos());
                 Pn.setMAR(this.MemDisponible);
                 Pn.setPC(this.MemDisponible);
                 Pn.setIsSuspended(false);
@@ -100,9 +101,9 @@ public class ShortScheduler {
     }
     
     public void LiberarMemoria(PCB Pn){
-        this.MemDisponible = this.MemDisponible + Pn.GetCiclos();
+        this.setMemDisponible(this.MemDisponible + Pn.GetCiclos());
         if(this.MemDisponible > this.Memoria){ //Caso extremo
-            this.MemDisponible = this.Memoria;
+            this.setMemDisponible(this.Memoria);
         }
     }
     
@@ -120,6 +121,31 @@ public class ShortScheduler {
             this.E.Añadir(n);
             n = n.getpNext();
         }
+    }
+
+    /**
+     * @param Memoria the Memoria to set
+     */
+    public void setMemoria(int Memoria) {
+        this.setMemDisponible(this.MemDisponible + (Memoria - this.Memoria));
+        this.Memoria = Memoria;
+        
+    }
+
+
+    /**
+     * @param Time the Time to set
+     */
+    public void setTime(int Time) {
+        this.Time = Time;
+        this.Bloqueados.setTime(Time);
+    }
+
+    /**
+     * @param MemDisponible the MemDisponible to set
+     */
+    public void setMemDisponible(int MemDisponible) {
+        this.MemDisponible = MemDisponible;
     }
 
 
