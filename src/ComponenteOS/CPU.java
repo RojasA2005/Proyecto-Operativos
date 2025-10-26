@@ -167,6 +167,7 @@ public class CPU extends Thread{
     public void MoverRunningAExit(){
         this.Scheduler.LiberarMemoria(getRunning());
         this.Long.addCompletado(getRunning());
+        this.getRunning().setEndtime();
         this.getPausa().setHasInterrupt(true);
         this.getPausa().setProcessSwitch(true);
     }
@@ -227,6 +228,14 @@ public class CPU extends Thread{
      */
     public Interrupt getPausa() {
         return Pausa;
+    }
+    
+     public String SuspReady(){
+        return this.Scheduler.SuspReady();
+    }
+     
+     public String SuspBlocked(){
+        return this.Scheduler.SuspBlocked();
     }
     
 }

@@ -167,6 +167,14 @@ public class ShortScheduler {
         this.E.setType(tipo);
         this.E.Initialize(tipo);
     }
+    
+    public String SuspReady(){
+        return this.Suspended.NombreSuspendidosReady();
+    }
+    
+    public String SuspBlocked(){
+        return this.Suspended.NombreSuspendidoBlocked();
+    }
 
 
 }

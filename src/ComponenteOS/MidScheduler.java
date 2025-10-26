@@ -69,6 +69,30 @@ public class MidScheduler {
         }
         return null;
     }
+    
+    public String NombreSuspendidosReady(){
+        String s = "";
+        Nodo n = this.ReadySuspend.getFirst();
+        while(n != null){
+            if(n.getData().isIsSuspended()==false){
+                    s = s + n.getData().getAllData() + "\n";
+                }
+            n = n.getpNext();
+        }
+        return s;
+    }
+    
+    public String NombreSuspendidoBlocked(){
+        String s = "";
+        Nodo n = this.BlockedSuspend.getFirst();
+        while(n != null){
+            if(n.getData().isIsSuspended()==false){
+                    s = s + n.getData().getAllData() + "\n";
+                }
+            n = n.getpNext();
+        }
+        return s;
+    }
 
     /**
      * @return the size

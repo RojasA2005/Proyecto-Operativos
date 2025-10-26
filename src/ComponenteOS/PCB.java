@@ -19,6 +19,8 @@ public class PCB {
     private int MAR;
     private Proceso_CPU_Bound ProcesoCPU;
     private Proceso_IO_Bound ProcesoIO;
+    private long starttime;
+    private long endtime;
     
     public PCB(int id, String name, int cycles, boolean IsCPUBound, int first_memory, int ins_per_IO, int ins_to_io){
         status = 0; //Inicializa como new
@@ -36,6 +38,7 @@ public class PCB {
         }
         this.IsSuspended = false;
         this.remaining_cycles = cycles;
+        this.starttime = System.currentTimeMillis();
         
     }
     
@@ -179,5 +182,26 @@ public class PCB {
      */
     public void setRemaining_cycles(int remaining_cycles) {
         this.remaining_cycles = remaining_cycles;
+    }
+
+    /**
+     * @return the starttime
+     */
+    public long getStarttime() {
+        return starttime;
+    }
+
+    /**
+     * @return the endtime
+     */
+    public long getEndtime() {
+        return endtime;
+    }
+
+    /**
+     * @param endtime the endtime to set
+     */
+    public void setEndtime() {
+        this.endtime = System.currentTimeMillis();
     }
 }

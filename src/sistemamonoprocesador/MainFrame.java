@@ -67,6 +67,8 @@ boolean running;
                 jTextArea1.setText(this.Procesador.GetReadyNames());
                 jTextArea2.setText(this.Procesador.NamesBloqueados());
                 jTextArea5.setText(this.Procesador.CompNames());
+                jTextArea3.setText(this.Procesador.SuspReady());
+                jTextArea4.setText(this.Procesador.SuspBlocked());
                 this.P.setActualizarInterfaz(false);
             } else{
                 System.out.println("Espera");
