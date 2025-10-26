@@ -4,17 +4,20 @@
  */
 package sistemamonoprocesador;
 
+import ComponenteOS.CPU;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Massi
  */
 public class CrearProceso extends javax.swing.JFrame {
-
+CPU P;
     /**
      * Creates new form CrearProceso
      */
-    public CrearProceso() {
-        
+    public CrearProceso(CPU P) {
+        this.P = P;
         initComponents();
         jLabel4.setVisible(false);
             jLabel5.setVisible(false);
@@ -68,6 +71,11 @@ public class CrearProceso extends javax.swing.JFrame {
         jLabel4.setText("Ciclo para I/O");
 
         jButton1.setText("Ok");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Cancelar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -162,40 +170,38 @@ public class CrearProceso extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        String name = jTextField1.getText();
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CrearProceso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CrearProceso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CrearProceso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CrearProceso.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        String textCiclos = jTextField2.getText().trim();
+        if (textCiclos.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "El campo edad no puede estar vacío");
+            jTextField2.requestFocus();
+            return;
+        }        
+        int ciclos = Integer.parseInt(textCiclos);
+        int ciclos_para_io = 0;
+        int ciclos_por_io = 0;
+        if(jComboBox1.getSelectedIndex()==0){
+            this.P.CrearProceso(false, name, ciclos, ciclos_para_io, ciclos_por_io);
+        } else{
+            ciclos_para_io = Integer.parseInt(jTextField3.getText());
+            ciclos_por_io = Integer.parseInt(jTextField3.getText());
+            this.P.CrearProceso(true, name, ciclos, ciclos_para_io, ciclos_por_io);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CrearProceso().setVisible(true);
-            }
-        });
+        this.dispose();
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, 
+            "Error: Todos los valores deben ser enteros", 
+            "Error de formato", 
+            JOptionPane.ERROR_MESSAGE);
+        jTextField2.requestFocus();
     }
+        
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

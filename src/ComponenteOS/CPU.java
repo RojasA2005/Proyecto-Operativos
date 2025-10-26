@@ -115,4 +115,8 @@ public class CPU extends Thread{
         this.Memoria = Memoria;
     }
     
+    public void changeType(int i){
+        this.Scheduler.setTipo(i);
+    }
+    
 }

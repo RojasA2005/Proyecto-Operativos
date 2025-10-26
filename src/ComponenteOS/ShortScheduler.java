@@ -14,7 +14,7 @@ import EDD.Semaforo;
  * @author Andrés
  */
 public class ShortScheduler {
-    int tipo; //Del 0 al 5, para cada tipo de organización
+    private int tipo; //Del 0 al 5, para cada tipo de organización
     Cola Ready;
     Cola LRU;
     IOModulo Bloqueados;
@@ -146,6 +146,21 @@ public class ShortScheduler {
      */
     public void setMemDisponible(int MemDisponible) {
         this.MemDisponible = MemDisponible;
+    }
+
+    /**
+     * @return the tipo
+     */
+    public int getTipo() {
+        return tipo;
+    }
+
+    /**
+     * @param tipo the tipo to set
+     */
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+        this.E.setType(tipo);
     }
 
 
