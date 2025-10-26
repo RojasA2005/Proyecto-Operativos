@@ -170,6 +170,10 @@ public class CPU extends Thread{
         this.getPausa().setHasInterrupt(true);
         this.getPausa().setProcessSwitch(true);
     }
+    
+    public String CompNames(){
+        return this.Long.NombreCompletados();
+    }
 
     /**
      * @return the Time_per_cycle

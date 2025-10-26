@@ -50,6 +50,7 @@ public class PCB {
             this.ProcesoCPU.updatecycles();
             this.remaining_cycles = this.ProcesoCPU.inst_faltantes;
         }
+        this.getPCandMAR();
     }
     
     public void getPCandMAR(){

@@ -40,4 +40,16 @@ public class LongScheduler {
     public Lista Completados(){
         return this.Completados;
     }
+    
+    public String NombreCompletados(){
+        String s = "";
+        Nodo n = this.Completados.getFirst();
+        while(n != null){
+            if(n.getData().isIsSuspended()==false){
+                    s = s + n.getData().getAllData() + "\n";
+                }
+            n = n.getpNext();
+        }
+        return s;
+    }
 }
