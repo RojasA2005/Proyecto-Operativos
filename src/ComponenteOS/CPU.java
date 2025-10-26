@@ -40,6 +40,11 @@ public class CPU extends Thread{
         Nodo n;
         while(true){
             if(this.isWorking()==false){
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 continue;
             }
             if(this.running==null){

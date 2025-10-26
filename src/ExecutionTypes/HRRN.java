@@ -71,6 +71,7 @@ public class HRRN extends Thread{
         if(n_max!=null){
             System.out.println("Se eligió " + n_max.getData().getAllData());
         }
+        this.Listos.Eliminate(n_max.getData().getId());
         return n_max;
     }
 

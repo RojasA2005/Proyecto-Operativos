@@ -84,7 +84,7 @@ CPU P;
             }
         });
 
-        jLabel5.setText("Ciclo para I/O");
+        jLabel5.setText("Ciclo por I/O");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -186,7 +186,7 @@ CPU P;
             this.P.CrearProceso(false, name, ciclos, ciclos_para_io, ciclos_por_io);
         } else{
             ciclos_para_io = Integer.parseInt(jTextField3.getText());
-            ciclos_por_io = Integer.parseInt(jTextField3.getText());
+            ciclos_por_io = Integer.parseInt(jTextField4.getText());
             this.P.CrearProceso(true, name, ciclos, ciclos_para_io, ciclos_por_io);
         }
         this.dispose();

@@ -46,7 +46,7 @@ public class ShortScheduler {
         this.running = this.E.Execute();
         respuesta = this.running;
         if(this.running != null){
-            this.LRU.Eliminate(this.running.getData());
+            this.LRU.Eliminate(this.running.getData().getId());
             this.LRU.queue(new Nodo(this.running.getData()));
         }
         return respuesta;
@@ -60,12 +60,16 @@ public class ShortScheduler {
         Nodo n = new Nodo(Pn);
         if(this.MemDisponible >= Pn.GetCiclos()){
             this.E.Añadir(n);
+            n.getData().setMAR(this.MemDisponible - Pn.GetCiclos());
+            n.getData().setPC(this.MemDisponible - Pn.GetCiclos());
             this.setMemDisponible(this.MemDisponible - Pn.GetCiclos());
         } else {
             while(this.MemDisponible < Pn.GetCiclos()){
                 this.MoverASuspended();
             }
             this.E.Añadir(n);
+            n.getData().setMAR(this.MemDisponible - Pn.GetCiclos());
+            n.getData().setPC(this.MemDisponible - Pn.GetCiclos());
             this.setMemDisponible(this.MemDisponible - Pn.GetCiclos());
         }
         this.LRU.queue(new Nodo(Pn));

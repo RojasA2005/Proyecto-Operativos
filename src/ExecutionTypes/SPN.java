@@ -38,6 +38,7 @@ public class SPN {
         if(n_min!=null){
             System.out.println("Se eligió " + n_min.getData().getAllData());
         }
+        this.Listos.Eliminate(n_min.getData().getId());
         return n_min;
     }
 

@@ -62,7 +62,11 @@ public class FeedBack extends Thread{
         }
         Nodo n = this.pFirst.getData().dequeue();
         if(this.pFirst.getData().getSize()==0){
-            this.pFirst = this.pFirst.getpNext();
+            if(this.pFirst.getpNext()==null){
+                this.pFirst = new ColaMultinivel(new Cola());
+            }else{
+                this.pFirst = this.pFirst.getpNext();
+            }
         }
         if(n!=null){
             System.out.println("Se eligió " + n.getData().getAllData());
@@ -73,7 +77,7 @@ public class FeedBack extends Thread{
     public void quitar(PCB Pn){
         ColaMultinivel iter = this.pFirst;
         while(iter!=null){
-            iter.getData().Eliminate(Pn);
+            iter.getData().Eliminate(Pn.getId());
             iter = iter.getpNext();
         }
     }

@@ -70,18 +70,21 @@ public class Cola {
         return null;
     }
     
-    public void Eliminate(PCB Pn){
+    public void Eliminate(int id){
          Nodo n = this.pFirst;
-        if(n.getData() == Pn){
+         if(n!=null){
+        if(n.getData().getId() == id){
             pFirst = pFirst.getpNext();
         } else{
-            while(n != null){
-                if(n.getpNext().getData() == Pn){
+            while(n.getpNext() != null){
+                if(n.getpNext().getData().getId() == id){
                     n.setpNext(n.getpNext().getpNext());
+                    return;
                 }
                 n = n.getpNext();
             }
         }
+         } 
     }
 
     /**

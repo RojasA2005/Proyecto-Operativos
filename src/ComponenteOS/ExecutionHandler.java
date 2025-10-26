@@ -91,9 +91,9 @@ public class ExecutionHandler {
             case 5:
                 n = this.feed.choose();
                 if(this.feed.isAlive()){
-                   this.feed.setWorking(true);
+                   this.P.setQuantumWorking(true);
                 } else{
-                    this.RR.setWorking(true);
+                    this.P.setQuantumWorking(true);
                     this.feed.start();
                 }
                 break;
@@ -104,7 +104,7 @@ public class ExecutionHandler {
     public void Añadir(Nodo n){
         if(this.type==3){
             this.srt.Agregar(n);
-        } else if(this.type==6){
+        } else if(this.type==5){
             this.feed.Agregar(n);
             this.listo.queue(new Nodo(n.getData()));
         } else{
@@ -117,7 +117,7 @@ public class ExecutionHandler {
         if(type==6){
             this.feed.quitar(Pn);
         } else{
-            this.listo.Eliminate(Pn);
+            this.listo.Eliminate(Pn.getId());
         }
     }
 
