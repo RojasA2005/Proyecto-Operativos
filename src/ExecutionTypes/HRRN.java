@@ -17,8 +17,10 @@ public class HRRN extends Thread{
     Cola Listos;
     private String name;
     int Time;
+    private boolean Working;
     
     public HRRN(Cola l, int t){
+        this.Working = false;
         this.Listos = l;
         this.Time = t;
         this.name = "Highest Response Ratio Next";
@@ -32,6 +34,10 @@ public class HRRN extends Thread{
     
     @Override
     public void run(){
+        while(true){
+            if(Working == false){
+                continue;
+            }
         try {
             Thread.sleep(this.Time);
         } catch (InterruptedException ex) {
@@ -43,6 +49,7 @@ public class HRRN extends Thread{
             n.setR();
             n = n.getpNext();
         }
+    }
     }
     
     
@@ -69,5 +76,12 @@ public class HRRN extends Thread{
      */
     public String getmethodName() {
         return name;
+    }
+
+    /**
+     * @param Working the Working to set
+     */
+    public void setWorking(boolean Working) {
+        this.Working = Working;
     }
 }

@@ -65,7 +65,11 @@ public class ExecutionHandler {
                 break;
             case 1:
                 n = this.RR.choose();
-                this.RR.start();
+                if(this.RR.isAlive()){
+                    this.RR.setWorking(true);
+                } else{
+                    this.RR.start();
+                }
                 break;
             case 2:
                 n = this.spn.choose();
@@ -75,11 +79,19 @@ public class ExecutionHandler {
                 break;
             case 4:
                 n = this.hrrn.choose();
+                if(this.hrrn.isAlive()){
+                    this.hrrn.setWorking(true);
+                }else {
                 this.hrrn.start();
+                }
                 break;
             case 5:
                 n = this.feed.choose();
-                this.feed.start();
+                if(this.feed.isAlive()){
+                   this.feed.setWorking(true);
+                } else{
+                 this.feed.start();
+                }
                 break;
         }
          return n;

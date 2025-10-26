@@ -18,8 +18,9 @@ public class RoundRobin extends Thread{
     int quantum;
     Cola Listos;
     Interrupt Pausa;
-    
+    private boolean Working;
     public RoundRobin(int t, Cola l, Interrupt P){
+        this.Working = false;
         this.quantum = t;
         this.Listos = l;
         this.Pausa = P;
@@ -27,6 +28,10 @@ public class RoundRobin extends Thread{
     
     @Override
     public void run(){
+        while(true){
+            if(Working = false){
+                continue;
+            }
         try {
             Thread.sleep(quantum);
         } catch (InterruptedException ex) {
@@ -34,10 +39,19 @@ public class RoundRobin extends Thread{
         }
         this.Pausa.setHasInterrupt(true);
         this.Pausa.setProcessSwitch(true);
+        Working = false;
+    }
     }
     
     public Nodo choose(){
         return this.Listos.dequeue();
         
+    }
+
+    /**
+     * @param Working the Working to set
+     */
+    public void setWorking(boolean Working) {
+        this.Working = Working;
     }
 }

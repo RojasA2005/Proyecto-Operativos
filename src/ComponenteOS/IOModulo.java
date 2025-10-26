@@ -31,7 +31,10 @@ public class IOModulo extends Thread{
     
     @Override
     public void run(){
-        while(isWorking()){
+        while(true){
+            if(this.Working==false){
+                continue;
+            }
         Nodo n;
         S.waitSem();
         try {

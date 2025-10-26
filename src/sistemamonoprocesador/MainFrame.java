@@ -348,8 +348,10 @@ int quantum;
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        if(this.Procesador.isWorking()==false){
+        if(this.Procesador.isAlive()==false){
             this.Procesador.iniciar(quantum);
+        }else{
+            this.Procesador.setWorking(true);
         }
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed

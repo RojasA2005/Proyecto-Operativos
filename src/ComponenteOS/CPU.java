@@ -37,7 +37,10 @@ public class CPU extends Thread{
     
     @Override
     public void run(){
-        while(isWorking()){
+        while(true){
+            if(this.isWorking()==false){
+                continue;
+            }
             if(this.running==null){
                 this.Pausa.setHasInterrupt(true);
                 this.Pausa.setProcessSwitch(true);
@@ -67,8 +70,9 @@ public class CPU extends Thread{
             }
             if(running!=null){
                 while(running.getRemaining_cycles()>0){
-                                    System.out.println("b");
-
+                    if(this.isWorking()==false){
+                        continue;
+                    }         
                     try {
                         Thread.sleep(this.Time_per_cycle);
                     } catch (InterruptedException ex) {
@@ -99,7 +103,7 @@ public class CPU extends Thread{
         this.Scheduler.initialize(quantum);
         Nodo n = this.Scheduler.choose();
         if(n != null){
-        this.running = this.Scheduler.choose().getData();
+        this.running = n.getData();
         } else {
             this.Working = false;
             this.Scheduler.Bloqueados.setWorking(false);

@@ -21,8 +21,10 @@ public class FeedBack extends Thread{
     Interrupt Pausa;
     int quantum;
     private String name;
+    private boolean Working;
     
     public FeedBack(Cola l, Interrupt P, int t){
+        this.Working = false;
         this.name = "FeedBack";
         Cola copy = new Cola();
         Nodo m = l.peek();
@@ -72,13 +74,19 @@ public class FeedBack extends Thread{
     
     @Override
     public void run(){
-        try {
-            Thread.sleep(quantum);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
+        while(true){
+            if(Working == false){
+                continue;
+            }
+            try {
+                Thread.sleep(quantum);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.Pausa.setHasInterrupt(true);
+            this.Pausa.setProcessSwitch(true);
+            Working = false;
         }
-        this.Pausa.setHasInterrupt(true);
-        this.Pausa.setProcessSwitch(true);
     }
 
     /**
@@ -86,5 +94,12 @@ public class FeedBack extends Thread{
      */
     public String getmethodName() {
         return name;
+    }
+
+    /**
+     * @param Working the Working to set
+     */
+    public void setWorking(boolean Working) {
+        this.Working = Working;
     }
 }
