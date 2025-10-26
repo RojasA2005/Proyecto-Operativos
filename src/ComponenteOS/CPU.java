@@ -32,36 +32,70 @@ public class CPU extends Thread{
         this.Long = new LongScheduler();
         this.procesoid = 0;
         this.Working = false;
+        this.running = null;
     }
     
     @Override
     public void run(){
         while(Working){
+            if(this.running==null){
+                this.Pausa.setHasInterrupt(true);
+                this.Pausa.setProcessSwitch(true);
+                System.out.println("a");
+            }
             if(this.Pausa.isHasInterrupt()){
-                if(this.Pausa.isProcessSwitch()){
+                if(this.Pausa.isProcessSwitch()){                    
                     this.running.getPCandMAR();
                     Nodo n = this.Scheduler.choose();
+                    if(this.running.getRemaining_cycles()==0){
+                        this.MoverRunningAExit();
+                    }
+                    if(n == null){
+                        continue;
+                    }
                     this.running = n.getData();
                     this.running.setStatus(1);
-                } else{
-                    this.Scheduler.MoverBlockedAReady();
-                    this.Scheduler.MoverSuspendedANoSuspended();
                 }
+                this.MoverNewAReady();
+                this.Scheduler.MoverBlockedAReady();
+                this.Scheduler.MoverSuspendedANoSuspended();
+                this.Pausa.setHasInterrupt(false);
+                this.Pausa.setProcessSwitch(false);
             }
-            while(running.getRemaining_cycles()>0){
-                try {
-                    Thread.sleep(this.Time_per_cycle);
-                } catch (InterruptedException ex) {
-                    Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
+            if(running!=null){
+                while(running.getRemaining_cycles()>0){
+                                    System.out.println("b");
+
+                    try {
+                        Thread.sleep(this.Time_per_cycle);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    running.update();
+                    if(running.getStatus()==3){
+                        this.Scheduler.MoverRunningABlocked(running);
+                        this.Pausa.setHasInterrupt(true);
+                        this.Pausa.setProcessSwitch(true);
+                    }
                 }
-                running.update();
-                if(running.getStatus()==3){
-                    this.Scheduler.MoverRunningABlocked(running);
-                    this.Pausa.setHasInterrupt(true);
-                    this.Pausa.setProcessSwitch(true);
-                }
+                this.Pausa.setHasInterrupt(true);
+                this.Pausa.setProcessSwitch(true);
+                System.out.println("A");
+                
             }
         }
+    }
+    
+    public void iniciar(int quantum){
+        this.Scheduler.Bloqueados.setWorking(true);
+        this.Scheduler.Bloqueados.start();
+        this.Working = true;
+        this.MoverNewAReady();
+        this.Scheduler.MoverBlockedAReady();
+        this.Scheduler.MoverSuspendedANoSuspended();
+        this.Scheduler.initialize(quantum);
+        this.running = this.Scheduler.choose().getData();
+        this.start();
     }
     
     public void CrearProceso(boolean isCPUBound, String name, int ciclos, int ciclos_para_IO, int ciclos_por_interrupcion){

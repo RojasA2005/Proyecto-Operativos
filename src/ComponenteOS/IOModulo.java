@@ -19,16 +19,19 @@ public class IOModulo extends Thread{
     private int Time;
     Semaforo S;
     Interrupt Pausa;
+    private boolean Working;
     
     public IOModulo(int Time, Interrupt P, Semaforo S){
         this.IOlista = new Lista();
         this.Time = Time;
         this.Pausa = P;
         this.S = S;
+        this.Working = false;
     }
     
     @Override
     public void run(){
+        while(isWorking()){
         Nodo n;
         S.waitSem();
         try {
@@ -45,6 +48,7 @@ public class IOModulo extends Thread{
             Logger.getLogger(IOModulo.class.getName()).log(Level.SEVERE, null, ex);
         }
         S.signal();
+        }
     }
     
     public void add(PCB Pn){
@@ -96,5 +100,19 @@ public class IOModulo extends Thread{
      */
     public void setTime(int Time) {
         this.Time = Time;
+    }
+
+    /**
+     * @return the Working
+     */
+    public boolean isWorking() {
+        return Working;
+    }
+
+    /**
+     * @param Working the Working to set
+     */
+    public void setWorking(boolean Working) {
+        this.Working = Working;
     }
 }

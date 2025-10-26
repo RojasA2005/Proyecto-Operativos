@@ -42,11 +42,13 @@ public class PCB {
     public void update(){
         if(this.ProcesoCPU==null){
             this.ProcesoIO.updatecycles();
+            this.remaining_cycles = this.ProcesoIO.getInst_faltantes();
             if(this.ProcesoIO.isStartInterrupt()){
                 this.status = 3;
             }
         } else{
             this.ProcesoCPU.updatecycles();
+            this.remaining_cycles = this.ProcesoCPU.inst_faltantes;
         }
     }
     

@@ -44,6 +44,7 @@ public class ShortScheduler {
     public Nodo choose(){
         Nodo respuesta = null;
         this.running = this.E.Execute();
+        respuesta = this.running;
         if(this.running != null){
             this.LRU.Eliminate(this.running.getData());
             this.LRU.queue(new Nodo(this.running.getData()));

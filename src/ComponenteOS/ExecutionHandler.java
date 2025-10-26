@@ -31,6 +31,7 @@ public class ExecutionHandler {
     public ExecutionHandler(Cola l, Interrupt P){
         this.listo = l;
         this.P = P;
+        this.type = 0;
     }
     
     public void Initialize(int quantum){ //Ejecutar este en un cambio de metodo de planificación
