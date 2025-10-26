@@ -40,7 +40,13 @@ public class RoundRobin extends Thread{
                 System.out.println("paro");
                 this.Pausa.setHasInterrupt(true);
                 this.Pausa.setProcessSwitch(true);
-        }
+        } else{
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         
     }
     }

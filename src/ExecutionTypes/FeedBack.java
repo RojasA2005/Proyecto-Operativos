@@ -81,9 +81,7 @@ public class FeedBack extends Thread{
     @Override
     public void run(){
         while(true){
-            if(Working == false){
-                continue;
-            }
+            if(this.Pausa.isQuantumWorking()){
             try {
                 Thread.sleep(quantum);
             } catch (InterruptedException ex) {
@@ -91,7 +89,14 @@ public class FeedBack extends Thread{
             }
             this.Pausa.setHasInterrupt(true);
             this.Pausa.setProcessSwitch(true);
-            Working = false;
+            this.Pausa.setQuantumWorking(false);
+            } else{
+            try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
     }
 
