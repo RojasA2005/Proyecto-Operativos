@@ -6,6 +6,7 @@ package sistemamonoprocesador;
 
 import ComponenteOS.CPU;
 import ComponenteOS.Interrupt;
+import ComponenteOS.PCB;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,6 +41,7 @@ boolean running;
     
 @Override
     public void run(){
+        PCB p;
         while(true){
             if(running==false){
                 try {
@@ -54,8 +56,9 @@ boolean running;
                 cicle++;
                 jLabel5.setText(String.valueOf(cicle));
                 jLabel12.setText("Proceso");
-                if(this.Procesador.getRunning()!=null){
-                    jTextArea6.setText(this.Procesador.getRunning().getAllData());
+                p = this.Procesador.getRunning();
+                if(p!=null){
+                    jTextArea6.setText(p.getAllData());
                 } else{
                     jTextArea6.setText("ocioso");
                 }
@@ -70,8 +73,6 @@ boolean running;
                 jTextArea3.setText(this.Procesador.SuspReady());
                 jTextArea4.setText(this.Procesador.SuspBlocked());
                 this.P.setActualizarInterfaz(false);
-            } else{
-                System.out.println("Espera");
             }
         }
     }
@@ -128,7 +129,7 @@ boolean running;
             }
         });
 
-        jButton2.setText("jButton2");
+        jButton2.setText("20 al azar");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -180,7 +181,7 @@ boolean running;
         });
 
         jSlider1.setMaximum(10000);
-        jSlider1.setMinimum(1);
+        jSlider1.setMinimum(100);
         jSlider1.setValue(2000);
         jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -189,7 +190,7 @@ boolean running;
         });
 
         jSlider2.setMaximum(5000);
-        jSlider2.setMinimum(1);
+        jSlider2.setMinimum(100);
         jSlider2.setValue(3000);
         jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -198,7 +199,7 @@ boolean running;
         });
 
         jSlider3.setMaximum(500);
-        jSlider3.setMinimum(1);
+        jSlider3.setMinimum(100);
         jSlider3.setValue(250);
         jSlider3.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -269,7 +270,7 @@ boolean running;
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(123, 123, 123)
                                 .addComponent(jLabel8)
-                                .addGap(0, 107, Short.MAX_VALUE))))
+                                .addGap(0, 104, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addGap(64, 64, 64)
@@ -428,7 +429,15 @@ boolean running;
     }//GEN-LAST:event_jSlider3StateChanged
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        int i = 0;
+        while(i < 20){
+            if(Math.random() < 0.5){
+                this.Procesador.CrearProceso(true, String.valueOf(i), (int)(Math.random() * 21) + 10, (int)(Math.random() * 5) + 1, (int)(Math.random() * 5) + 1);
+            }else{
+                this.Procesador.CrearProceso(false, String.valueOf(i), (int)(Math.random() * 21) + 10, 0, 0);
+            }
+            i++;
+        }        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -452,7 +461,6 @@ boolean running;
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         this.Procesador.setWorking(false);
         this.running = false;
-        System.out.println("hecho");        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     /**

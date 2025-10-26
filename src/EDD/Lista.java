@@ -9,7 +9,7 @@ package EDD;
  * @author Andrés
  */
 public class Lista {
-    Nodo pFirst;
+    private Nodo pFirst;
     private int size;
     
     public Lista(){
@@ -26,7 +26,7 @@ public class Lista {
     
     public void add(Nodo n){
         if(pFirst == null){
-            pFirst = n;
+            setpFirst(n);
         } else{
             Nodo aux = pFirst;
             while(aux.getpNext() != null){
@@ -49,25 +49,39 @@ public class Lista {
     }
     
     public void eliminate(String name){
-        Nodo n = this.pFirst;
-        if(n==null){return;}
-        if(n.getData().getName().equals(name) && n != null){
-            pFirst = pFirst.getpNext();
-        } else{
-            while(n != null){
-                if(n.getpNext().getData().getName().equals(name)){
-                    n.setpNext(n.getpNext().getpNext());
-                    return;
-                }
-                n = n.getpNext();
-            }
-        }
+    if(pFirst == null) return;
+    
+    // Caso: eliminar el primer nodo
+    if(pFirst.getData().getName().equals(name)){
+            setpFirst(pFirst.getpNext());
+        return;
     }
+    
+    // Caso: eliminar nodos intermedios
+    Nodo anterior = pFirst;
+    Nodo actual = pFirst.getpNext();
+    
+    while(actual != null){
+        if(actual.getData().getName().equals(name)){
+            anterior.setpNext(actual.getpNext());
+            return;
+        }
+        anterior = actual;
+        actual = actual.getpNext();
+    }
+}
 
     /**
      * @return the size
      */
     public int getSize() {
         return size;
+    }
+
+    /**
+     * @param pFirst the pFirst to set
+     */
+    public void setpFirst(Nodo pFirst) {
+        this.pFirst = pFirst;
     }
 }

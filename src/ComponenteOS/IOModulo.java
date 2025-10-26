@@ -16,6 +16,7 @@ import java.util.logging.Logger;
  */
 public class IOModulo extends Thread{
     private Lista IOlista;
+    private final Object listaLock = new Object();
     private int Time;
     Semaforo S;
     Interrupt Pausa;
@@ -61,53 +62,62 @@ public class IOModulo extends Thread{
         }
     }
     
-    public void add(PCB Pn){
+    public void add(PCB Pn) {
+    synchronized(listaLock) {
         Nodo n = new Nodo(Pn);
         this.IOlista.add(n);
         size++;
     }
-    
-    public Lista quitar() {
-    this.EliminarSuspended();
-    Lista l = new Lista();
-    Nodo n = this.IOlista.getFirst();
-    
-    while (n != null) {
-        PCB proceso = n.getData();
-        
-        if (!proceso.IOEnd() && !proceso.isIsSuspended()) {
-            // Guardar el siguiente nodo ANTES de eliminar
-            Nodo siguiente = n.getpNext();
-            
-            // Eliminar el nodo actual
-            this.IOlista.eliminate(proceso.getName());
-            
-            // Agregar a la lista de retorno
-            l.add(new Nodo(proceso)); // Crear nuevo nodo para la lista de retorno
-            size--;
-            
-            n = siguiente; // Avanzar al siguiente nodo
-        } else {
-            n = n.getpNext(); // Avanzar normalmente
-        }
-    }
-    return l;
 }
     
-    public void EliminarSuspended(){
-        Nodo n = this.IOlista.getFirst();
-        Nodo m;
-        while(n!=null){
-        if(n.getData().IOEnd()==false && n.getData().isIsSuspended()==true){
-            m = n.getpNext();
-            this.IOlista.eliminate(n.getData().getName());
-            n = m;
-            size--;
-            continue;
+   public Lista quitar() {
+    synchronized(listaLock) {
+        Lista l = new Lista();
+        Nodo anterior = null;
+        Nodo actual = this.IOlista.getFirst();
+        
+        while (actual != null) {
+            PCB proceso = actual.getData();
+            
+            if (!proceso.IOEnd() && !proceso.isIsSuspended()) {
+                l.add(new Nodo(proceso));
+                
+                if (anterior == null) {
+                    this.IOlista.setpFirst(actual.getpNext());
+                } else {
+                    anterior.setpNext(actual.getpNext());
+                }
+                size--;
+                actual = actual.getpNext();
+            } else {
+                anterior = actual;
+                actual = actual.getpNext();
+            }
         }
-        n = n.getpNext();
-        }
+        return l;
     }
+}
+    
+  public void EliminarSuspended(){
+    // PRIMERO recolectar
+    Lista procesosAEliminar = new Lista();
+    Nodo recolector = this.IOlista.getFirst();
+    while(recolector != null){
+        PCB proceso = recolector.getData();
+        if(!proceso.IOEnd() && proceso.isIsSuspended()){
+            procesosAEliminar.add(new Nodo(proceso));
+        }
+        recolector = recolector.getpNext();
+    }
+    
+    // LUEGO eliminar
+    Nodo eliminador = procesosAEliminar.getFirst();
+    while(eliminador != null){
+        this.IOlista.eliminate(eliminador.getData().getName());
+        size--;
+        eliminador = eliminador.getpNext();
+    }
+}
     
     public String NombresBloqueados(){
         String s = "";

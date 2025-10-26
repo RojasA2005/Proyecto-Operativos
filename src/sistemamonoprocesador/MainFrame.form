@@ -62,7 +62,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="123" max="-2" attributes="0"/>
                               <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="0" pref="107" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="104" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -243,7 +243,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="jButton2">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jButton2"/>
+        <Property name="text" type="java.lang.String" value="20 al azar"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
@@ -380,7 +380,7 @@
     <Component class="javax.swing.JSlider" name="jSlider1">
       <Properties>
         <Property name="maximum" type="int" value="10000"/>
-        <Property name="minimum" type="int" value="1"/>
+        <Property name="minimum" type="int" value="100"/>
         <Property name="value" type="int" value="2000"/>
       </Properties>
       <Events>
@@ -390,7 +390,7 @@
     <Component class="javax.swing.JSlider" name="jSlider2">
       <Properties>
         <Property name="maximum" type="int" value="5000"/>
-        <Property name="minimum" type="int" value="1"/>
+        <Property name="minimum" type="int" value="100"/>
         <Property name="value" type="int" value="3000"/>
       </Properties>
       <Events>
@@ -400,7 +400,7 @@
     <Component class="javax.swing.JSlider" name="jSlider3">
       <Properties>
         <Property name="maximum" type="int" value="500"/>
-        <Property name="minimum" type="int" value="1"/>
+        <Property name="minimum" type="int" value="100"/>
         <Property name="value" type="int" value="250"/>
       </Properties>
       <Events>

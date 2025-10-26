@@ -56,22 +56,26 @@ public class CPU extends Thread{
             if(this.isWorking()==false){
                 try {
                     Thread.sleep(50);
+                    System.out.println("Detenido!!!!!!!!!!!!!!!!!");
                 } catch (InterruptedException ex) {
                     Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 continue;
             }
             if(this.getRunning()==null){
+                System.out.println("Detenido 22222222222");
                 this.getPausa().setHasInterrupt(true);
                 this.getPausa().setProcessSwitch(true);
             }
             if(this.getPausa().isHasInterrupt()){
+                this.Pausa.setActualizarInterfaz(true);
                 if(this.getPausa().isProcessSwitch()){  
                     n = this.Scheduler.choose();
                     if(this.getRunning()!=null){
                         this.getRunning().getPCandMAR();
                         if(this.getRunning().getRemaining_cycles()==0){
                             this.MoverRunningAExit();
+                            this.running = null;
                         } else{
                             this.getRunning().setStatus(1);
                             this.Scheduler.add(getRunning());

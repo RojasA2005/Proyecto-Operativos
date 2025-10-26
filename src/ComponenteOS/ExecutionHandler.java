@@ -106,7 +106,9 @@ public class ExecutionHandler {
             this.srt.Agregar(n);
         } else if(this.type==5){
             this.feed.Agregar(n);
-            this.listo.queue(new Nodo(n.getData()));
+            if(n.getData().getRemaining_cycles()>0){
+                this.listo.queue(new Nodo(n.getData()));
+            }
         } else{
             this.listo.queue(n);
         }
@@ -114,7 +116,7 @@ public class ExecutionHandler {
     }
     
     public void Eliminar(PCB Pn){
-        if(type==6){
+        if(type==5){
             this.feed.quitar(Pn);
         } else{
             this.listo.Eliminate(Pn.getId());

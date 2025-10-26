@@ -12,7 +12,7 @@ import EDD.Nodo;
  *
  * @author Andrés
  */
-public class MidScheduler {
+public class MidScheduler extends Thread{
     Lista BlockedSuspend;
     Lista ReadySuspend;
     Cola AllSuspended;
@@ -42,15 +42,24 @@ public class MidScheduler {
     }
     
     public void MigrateToReady(){
-        Nodo n = this.BlockedSuspend.getFirst();
-        while(n != null){
-            if(n.getData().IOEnd()==true){
-                this.BlockedSuspend.eliminate(n.getData().getName());
-                n.setpNext(null);
-                this.ReadySuspend.add(n);
-            }
+    // PRIMERO recolectar los procesos que cumplen
+    Lista procesosAMover = new Lista();
+    Nodo recolector = this.BlockedSuspend.getFirst();
+    while(recolector != null){
+        if(recolector.getData().IOEnd() == false){  // Con false como especificas
+            procesosAMover.add(new Nodo(recolector.getData()));
         }
+        recolector = recolector.getpNext();  // ← ¡IMPORTANTE!
     }
+    
+    // LUEGO moverlos
+    Nodo movil = procesosAMover.getFirst();
+    while(movil != null){
+        this.BlockedSuspend.eliminate(movil.getData().getName());
+        this.ReadySuspend.add(new Nodo(movil.getData()));
+        movil = movil.getpNext();
+    }
+}
     
     private void AddReadySuspend(PCB Pn){
         Nodo n = new Nodo(Pn);
