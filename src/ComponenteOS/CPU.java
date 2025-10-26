@@ -21,7 +21,7 @@ public class CPU extends Thread{
     Interrupt Pausa;
     int procesoid;
     PCB running;
-    boolean Working;
+    private boolean Working;
     
     
     public CPU(int Time, int Memoria){
@@ -37,7 +37,7 @@ public class CPU extends Thread{
     
     @Override
     public void run(){
-        while(Working){
+        while(isWorking()){
             if(this.running==null){
                 this.Pausa.setHasInterrupt(true);
                 this.Pausa.setProcessSwitch(true);
@@ -51,6 +51,9 @@ public class CPU extends Thread{
                         this.MoverRunningAExit();
                     }
                     if(n == null){
+                        this.MoverNewAReady();
+                        this.Scheduler.MoverBlockedAReady();
+                        this.Scheduler.MoverSuspendedANoSuspended();
                         continue;
                     }
                     this.running = n.getData();
@@ -89,12 +92,18 @@ public class CPU extends Thread{
     public void iniciar(int quantum){
         this.Scheduler.Bloqueados.setWorking(true);
         this.Scheduler.Bloqueados.start();
-        this.Working = true;
+        this.setWorking(true);
         this.MoverNewAReady();
         this.Scheduler.MoverBlockedAReady();
         this.Scheduler.MoverSuspendedANoSuspended();
         this.Scheduler.initialize(quantum);
+        Nodo n = this.Scheduler.choose();
+        if(n != null){
         this.running = this.Scheduler.choose().getData();
+        } else {
+            this.Working = false;
+            this.Scheduler.Bloqueados.setWorking(false);
+        }
         this.start();
     }
     
@@ -151,6 +160,20 @@ public class CPU extends Thread{
     
     public void changeType(int i){
         this.Scheduler.setTipo(i);
+    }
+
+    /**
+     * @return the Working
+     */
+    public boolean isWorking() {
+        return Working;
+    }
+
+    /**
+     * @param Working the Working to set
+     */
+    public void setWorking(boolean Working) {
+        this.Working = Working;
     }
     
 }

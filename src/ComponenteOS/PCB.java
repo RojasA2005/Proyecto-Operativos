@@ -71,6 +71,11 @@ public class PCB {
         }
     }
     
+    public String getAllData(){
+        String d = this.id + " | " + this.name + " | " + this.PC + " | " + this.MAR;
+        return d;
+    }
+    
     public boolean IOEnd(){
         if(this.ProcesoIO != null){
             return this.ProcesoIO.isStartInterrupt();
