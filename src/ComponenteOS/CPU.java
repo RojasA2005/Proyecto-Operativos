@@ -14,13 +14,27 @@ import java.util.logging.Logger;
  * @author Andrés
  */
 public class CPU extends Thread{
+
+    /**
+     * @return the running
+     */
+    public PCB getRunning() {
+        return running;
+    }
+
+    /**
+     * @param running the running to set
+     */
+    public void setRunning(PCB running) {
+        this.running = running;
+    }
     private int Time_per_cycle;
     private int Memoria;
     ShortScheduler Scheduler;
     LongScheduler Long;
-    Interrupt Pausa;
+    private Interrupt Pausa;
     int procesoid;
-    PCB running;
+    private PCB running;
     private boolean Working;
     
     
@@ -28,7 +42,7 @@ public class CPU extends Thread{
         this.Time_per_cycle = Time;
         this.Pausa = new Interrupt();
         this.Memoria = Memoria;
-        this.Scheduler = new ShortScheduler(Time, this.Pausa, Memoria);
+        this.Scheduler = new ShortScheduler(Time, this.getPausa(), Memoria);
         this.Long = new LongScheduler();
         this.procesoid = 0;
         this.Working = false;
@@ -47,58 +61,73 @@ public class CPU extends Thread{
                 }
                 continue;
             }
-            if(this.running==null){
-                this.Pausa.setHasInterrupt(true);
-                this.Pausa.setProcessSwitch(true);
+            if(this.getRunning()==null){
+                this.getPausa().setHasInterrupt(true);
+                this.getPausa().setProcessSwitch(true);
             }
-            if(this.Pausa.isHasInterrupt()){
-                System.out.println("Sistema Operativo en Ejecución");
-                if(this.Pausa.isProcessSwitch()){  
+            if(this.getPausa().isHasInterrupt()){
+                if(this.getPausa().isProcessSwitch()){  
                     n = this.Scheduler.choose();
-                    if(this.running!=null){
-                        this.running.getPCandMAR();
-                        if(this.running.getRemaining_cycles()==0){
+                    if(this.getRunning()!=null){
+                        this.getRunning().getPCandMAR();
+                        if(this.getRunning().getRemaining_cycles()==0){
                             this.MoverRunningAExit();
                         } else{
-                            this.running.setStatus(1);
-                            this.Scheduler.add(running);
+                            this.getRunning().setStatus(1);
+                            this.Scheduler.add(getRunning());
                         }
                     }
                     if(n!=null){
-                        this.running = n.getData();
-                        this.running.setStatus(2);
+                        this.setRunning(n.getData());
+                        this.getRunning().setStatus(2);
                     } else{
-                        this.running = null;
+                        this.setRunning(null);
                     }
                 }
                 this.MoverNewAReady();
                 this.Scheduler.MoverBlockedAReady();
                 this.Scheduler.MoverSuspendedANoSuspended();
-                this.Pausa.setHasInterrupt(false);
-                this.Pausa.setProcessSwitch(false);
+                this.getPausa().setHasInterrupt(false);
+                this.getPausa().setProcessSwitch(false);
             }
-            if(running!=null){
-                if(running.getRemaining_cycles()>0){
+            this.Pausa.setActualizarInterfaz(true);
+            if(getRunning()!=null){
+                if(getRunning().getRemaining_cycles()>0){
                     System.out.println("Proceso en Ejecución");
                     try {
                         Thread.sleep(this.Time_per_cycle);
                     } catch (InterruptedException ex) {
                         Logger.getLogger(CPU.class.getName()).log(Level.SEVERE, null, ex);
                     }
-                    running.update();
-                    if(running.getStatus()==3){
-                        this.Scheduler.MoverRunningABlocked(running);
-                        this.Pausa.setHasInterrupt(true);
-                        this.Pausa.setProcessSwitch(true);
+                    getRunning().update();
+                    if(getRunning().getStatus()==3){
+                        this.Scheduler.MoverRunningABlocked(getRunning());
+                        this.setRunning(null);
+                        this.getPausa().setHasInterrupt(true);
+                        this.getPausa().setProcessSwitch(true);
                     }
                 } else{
                     System.out.println("terminado");
-                this.Pausa.setHasInterrupt(true);
-                this.Pausa.setProcessSwitch(true);
+                    this.getPausa().setHasInterrupt(true);
+                    this.getPausa().setProcessSwitch(true);
                 }
                 
             }
         }
+    }
+    
+    public String GetReadyNames(){
+        String s = "";
+        Nodo n = this.Scheduler.Ready.peek();
+        while(n != null){
+            s = s + n.getData().getAllData() + "\n";
+            n = n.getpNext();
+        }
+        return s;
+    }
+    
+    public String NamesBloqueados(){
+        return this.Scheduler.Bloqueados.NombresBloqueados();
     }
     
     public void iniciar(int quantum){
@@ -111,11 +140,12 @@ public class CPU extends Thread{
         this.Scheduler.initialize(quantum);
         Nodo n = this.Scheduler.choose();
         if(n != null){
-        this.running = n.getData();
+            this.setRunning(n.getData());
         } else {
             this.Working = false;
             this.Scheduler.Bloqueados.setWorking(false);
         }
+        this.Pausa.setActualizarInterfaz(true);
         this.start();
     }
     
@@ -135,10 +165,10 @@ public class CPU extends Thread{
     }
     
     public void MoverRunningAExit(){
-        this.Scheduler.LiberarMemoria(running);
-        this.Long.addCompletado(running);
-        this.Pausa.setHasInterrupt(true);
-        this.Pausa.setProcessSwitch(true);
+        this.Scheduler.LiberarMemoria(getRunning());
+        this.Long.addCompletado(getRunning());
+        this.getPausa().setHasInterrupt(true);
+        this.getPausa().setProcessSwitch(true);
     }
 
     /**
@@ -186,6 +216,13 @@ public class CPU extends Thread{
      */
     public void setWorking(boolean Working) {
         this.Working = Working;
+    }
+
+    /**
+     * @return the Pausa
+     */
+    public Interrupt getPausa() {
+        return Pausa;
     }
     
 }

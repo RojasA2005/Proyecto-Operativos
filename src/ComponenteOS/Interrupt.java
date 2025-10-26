@@ -12,6 +12,8 @@ public class Interrupt {
     private boolean HasInterrupt;
     private boolean ProcessSwitch;
     private boolean QuantumWorking;
+    private boolean ActualizarInterfaz;
+    private boolean tick;
     
     public Interrupt(){
         this.HasInterrupt = false;
@@ -59,6 +61,34 @@ public class Interrupt {
      */
     public void setQuantumWorking(boolean QuantumWorking) {
         this.QuantumWorking = QuantumWorking;
+    }
+
+    /**
+     * @return the ActualizarInterfaz
+     */
+    public boolean isActualizarInterfaz() {
+        return ActualizarInterfaz;
+    }
+
+    /**
+     * @param ActualizarInterfaz the ActualizarInterfaz to set
+     */
+    public void setActualizarInterfaz(boolean ActualizarInterfaz) {
+        this.ActualizarInterfaz = ActualizarInterfaz;
+    }
+
+    /**
+     * @return the tick
+     */
+    public boolean isTick() {
+        return tick;
+    }
+
+    /**
+     * @param tick the tick to set
+     */
+    public void setTick(boolean tick) {
+        this.tick = tick;
     }
     
     

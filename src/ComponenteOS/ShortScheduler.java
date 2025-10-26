@@ -118,10 +118,9 @@ public class ShortScheduler {
     
     public void MoverBlockedAReady(){
         this.Suspended.MigrateToReady();
-        this.S.waitSem();
         Lista l = this.Bloqueados.quitar();
-        this.S.signal();
         Nodo n = l.getFirst();
+        
         while(n != null){
             this.E.Añadir(n);
             n = n.getpNext();

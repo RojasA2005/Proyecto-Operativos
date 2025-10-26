@@ -41,6 +41,7 @@ public class Proceso_IO_Bound{
             this.complete = true;
         }
         if(this.getInst_to_IO_faltante()==0){
+            System.out.println("block");
             this.setStartInterrupt(true);
         }
     }

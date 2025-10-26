@@ -20,6 +20,7 @@ public class IOModulo extends Thread{
     Semaforo S;
     Interrupt Pausa;
     private boolean Working;
+    private int size;
     
     public IOModulo(int Time, Interrupt P, Semaforo S){
         this.IOlista = new Lista();
@@ -27,18 +28,24 @@ public class IOModulo extends Thread{
         this.Pausa = P;
         this.S = S;
         this.Working = false;
+        size = 0;
     }
     
     @Override
     public void run(){
         while(true){
             if(this.Working==false){
+                try {
+                    Thread.sleep(50);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(IOModulo.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 continue;
             }
         Nodo n;
-        S.waitSem();
         try {
             n = this.IOlista.getFirst();
+            System.out.println(this.size);
             while(n != null){
                 Thread.sleep(Time);
                 n.getData().updatewait();
@@ -47,35 +54,45 @@ public class IOModulo extends Thread{
                 }
                 n = n.getpNext();
             }
+            Thread.sleep(50);
         } catch (InterruptedException ex) {
             Logger.getLogger(IOModulo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        S.signal();
         }
     }
     
     public void add(PCB Pn){
         Nodo n = new Nodo(Pn);
         this.IOlista.add(n);
+        size++;
     }
     
-    public Lista quitar(){
-        this.EliminarSuspended();
-        Lista l = new Lista();
-        Nodo n = this.IOlista.getFirst();
-        Nodo m;
-        while(n!=null){
-        if(n.getData().IOEnd()==false && n.getData().isIsSuspended()==false){
-            m = n.getpNext();
-            this.IOlista.eliminate(n.getData().getName());
-            l.add(n);
-            n = m;
-            continue;
+    public Lista quitar() {
+    this.EliminarSuspended();
+    Lista l = new Lista();
+    Nodo n = this.IOlista.getFirst();
+    
+    while (n != null) {
+        PCB proceso = n.getData();
+        
+        if (!proceso.IOEnd() && !proceso.isIsSuspended()) {
+            // Guardar el siguiente nodo ANTES de eliminar
+            Nodo siguiente = n.getpNext();
+            
+            // Eliminar el nodo actual
+            this.IOlista.eliminate(proceso.getName());
+            
+            // Agregar a la lista de retorno
+            l.add(new Nodo(proceso)); // Crear nuevo nodo para la lista de retorno
+            size--;
+            
+            n = siguiente; // Avanzar al siguiente nodo
+        } else {
+            n = n.getpNext(); // Avanzar normalmente
         }
-        n = n.getpNext();
-        }
-        return l;
     }
+    return l;
+}
     
     public void EliminarSuspended(){
         Nodo n = this.IOlista.getFirst();
@@ -85,10 +102,23 @@ public class IOModulo extends Thread{
             m = n.getpNext();
             this.IOlista.eliminate(n.getData().getName());
             n = m;
+            size--;
             continue;
         }
         n = n.getpNext();
         }
+    }
+    
+    public String NombresBloqueados(){
+        String s = "";
+        Nodo n = this.IOlista.getFirst();
+        while(n != null){
+            if(n.getData().isIsSuspended()==false){
+                    s = s + n.getData().getAllData() + "\n";
+                }
+            n = n.getpNext();
+        }
+        return s;
     }
 
     /**
@@ -117,5 +147,12 @@ public class IOModulo extends Thread{
      */
     public void setWorking(boolean Working) {
         this.Working = Working;
+    }
+
+    /**
+     * @return the size
+     */
+    public int getSize() {
+        return size;
     }
 }

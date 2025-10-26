@@ -28,11 +28,11 @@ public class PCB {
         this.ciclos = cycles;
         this.id = id;
         if(IsCPUBound == true){
-            this.ProcesoIO = null;
-            this.ProcesoCPU = new Proceso_CPU_Bound(cycles);
-        } else{
             this.ProcesoCPU = null;
             this.ProcesoIO = new Proceso_IO_Bound(cycles, ins_per_IO, ins_to_io);
+        } else{
+            this.ProcesoIO = null;
+            this.ProcesoCPU = new Proceso_CPU_Bound(cycles);
         }
         this.IsSuspended = false;
         this.remaining_cycles = cycles;
