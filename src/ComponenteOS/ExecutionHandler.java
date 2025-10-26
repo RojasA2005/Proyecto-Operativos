@@ -66,8 +66,10 @@ public class ExecutionHandler {
             case 1:
                 n = this.RR.choose();
                 if(this.RR.isAlive()){
-                    this.RR.setWorking(true);
+                    System.out.println("de vuelta");
+                    this.P.setQuantumWorking(true);
                 } else{
+                    this.P.setQuantumWorking(true);
                     this.RR.start();
                 }
                 break;
@@ -82,7 +84,8 @@ public class ExecutionHandler {
                 if(this.hrrn.isAlive()){
                     this.hrrn.setWorking(true);
                 }else {
-                this.hrrn.start();
+                    this.RR.setWorking(true);
+                    this.hrrn.start();
                 }
                 break;
             case 5:
@@ -90,7 +93,8 @@ public class ExecutionHandler {
                 if(this.feed.isAlive()){
                    this.feed.setWorking(true);
                 } else{
-                 this.feed.start();
+                    this.RR.setWorking(true);
+                    this.feed.start();
                 }
                 break;
         }

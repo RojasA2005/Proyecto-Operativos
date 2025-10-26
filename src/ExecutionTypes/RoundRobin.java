@@ -15,7 +15,7 @@ import java.util.logging.Logger;
  * @author Andrés
  */
 public class RoundRobin extends Thread{
-    int quantum;
+    private int quantum;
     Cola Listos;
     Interrupt Pausa;
     private boolean Working;
@@ -29,23 +29,28 @@ public class RoundRobin extends Thread{
     @Override
     public void run(){
         while(true){
-            if(Working = false){
-                continue;
-            }
-        try {
-            Thread.sleep(quantum);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println(this.Pausa.isQuantumWorking());
+            if(this.Pausa.isQuantumWorking() == true){            
+                try {
+                    Thread.sleep(quantum);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(RoundRobin.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                this.Pausa.setQuantumWorking(false);
+                System.out.println("paro");
+                this.Pausa.setHasInterrupt(true);
+                this.Pausa.setProcessSwitch(true);
         }
-        this.Pausa.setHasInterrupt(true);
-        this.Pausa.setProcessSwitch(true);
-        Working = false;
+        
     }
     }
     
     public Nodo choose(){
-        return this.Listos.dequeue();
-        
+        Nodo n = this.Listos.dequeue();
+        if(n!=null){
+            System.out.println("Se eligió " + n.getData().getAllData());
+        }
+        return n;
     }
 
     /**
@@ -53,5 +58,19 @@ public class RoundRobin extends Thread{
      */
     public void setWorking(boolean Working) {
         this.Working = Working;
+    }
+
+    /**
+     * @param quantum the quantum to set
+     */
+    public void setQuantum(int quantum) {
+        this.quantum = quantum;
+    }
+
+    /**
+     * @return the Working
+     */
+    public boolean isWorking() {
+        return Working;
     }
 }

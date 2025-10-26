@@ -57,9 +57,15 @@ public class FeedBack extends Thread{
     }
     
     public Nodo choose(){
+        if(this.pFirst==null){
+            return null;
+        }
         Nodo n = this.pFirst.getData().dequeue();
         if(this.pFirst.getData().getSize()==0){
             this.pFirst = this.pFirst.getpNext();
+        }
+        if(n!=null){
+            System.out.println("Se eligió " + n.getData().getAllData());
         }
         return n;
     }

@@ -11,10 +11,12 @@ package ComponenteOS;
 public class Interrupt {
     private boolean HasInterrupt;
     private boolean ProcessSwitch;
+    private boolean QuantumWorking;
     
     public Interrupt(){
         this.HasInterrupt = false;
         this.ProcessSwitch = false;
+        this.QuantumWorking = false;
     }
     
     /**
@@ -43,6 +45,20 @@ public class Interrupt {
      */
     public void setProcessSwitch(boolean ProcessSwitch) {
         this.ProcessSwitch = ProcessSwitch;
+    }
+
+    /**
+     * @return the QuantumWorking
+     */
+    public boolean isQuantumWorking() {
+        return QuantumWorking;
+    }
+
+    /**
+     * @param QuantumWorking the QuantumWorking to set
+     */
+    public void setQuantumWorking(boolean QuantumWorking) {
+        this.QuantumWorking = QuantumWorking;
     }
     
     

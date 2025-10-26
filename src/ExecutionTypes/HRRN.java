@@ -68,6 +68,9 @@ public class HRRN extends Thread{
             }
             n = n.getpNext();
         }
+        if(n_max!=null){
+            System.out.println("Se eligió " + n_max.getData().getAllData());
+        }
         return n_max;
     }
 

@@ -44,6 +44,9 @@ public class SRT {
             }
             n = n.getpNext();
         }
+        if(n_min!=null){
+            System.out.println("Se eligió " + n_min.getData().getAllData());
+        }
         return n_min;
     }
 

@@ -162,6 +162,7 @@ public class ShortScheduler {
     public void setTipo(int tipo) {
         this.tipo = tipo;
         this.E.setType(tipo);
+        this.E.Initialize(tipo);
     }
 
 

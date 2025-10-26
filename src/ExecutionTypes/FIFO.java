@@ -19,7 +19,11 @@ public class FIFO {
     }
     
     public Nodo choose(){
-        return this.Listos.dequeue();
+        Nodo n = this.Listos.dequeue();
+        if(n!=null){
+            System.out.println("Se eligió " + n.getData().getAllData());
+        }
+        return n;
     }
     
     

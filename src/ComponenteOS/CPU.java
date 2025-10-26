@@ -37,6 +37,7 @@ public class CPU extends Thread{
     
     @Override
     public void run(){
+        Nodo n;
         while(true){
             if(this.isWorking()==false){
                 continue;
@@ -44,23 +45,25 @@ public class CPU extends Thread{
             if(this.running==null){
                 this.Pausa.setHasInterrupt(true);
                 this.Pausa.setProcessSwitch(true);
-                System.out.println("a");
             }
             if(this.Pausa.isHasInterrupt()){
-                if(this.Pausa.isProcessSwitch()){                    
-                    this.running.getPCandMAR();
-                    Nodo n = this.Scheduler.choose();
-                    if(this.running.getRemaining_cycles()==0){
-                        this.MoverRunningAExit();
+                if(this.Pausa.isProcessSwitch()){  
+                    n = this.Scheduler.choose();
+                    if(this.running!=null){
+                        this.running.getPCandMAR();
+                        if(this.running.getRemaining_cycles()==0){
+                            this.MoverRunningAExit();
+                        } else{
+                            this.running.setStatus(1);
+                            this.Scheduler.add(running);
+                        }
                     }
-                    if(n == null){
-                        this.MoverNewAReady();
-                        this.Scheduler.MoverBlockedAReady();
-                        this.Scheduler.MoverSuspendedANoSuspended();
-                        continue;
+                    if(n!=null){
+                        this.running = n.getData();
+                        this.running.setStatus(2);
+                    } else{
+                        this.running = null;
                     }
-                    this.running = n.getData();
-                    this.running.setStatus(1);
                 }
                 this.MoverNewAReady();
                 this.Scheduler.MoverBlockedAReady();
@@ -69,10 +72,7 @@ public class CPU extends Thread{
                 this.Pausa.setProcessSwitch(false);
             }
             if(running!=null){
-                while(running.getRemaining_cycles()>0){
-                    if(this.isWorking()==false){
-                        continue;
-                    }         
+                if(running.getRemaining_cycles()>0){         
                     try {
                         Thread.sleep(this.Time_per_cycle);
                     } catch (InterruptedException ex) {
@@ -84,10 +84,11 @@ public class CPU extends Thread{
                         this.Pausa.setHasInterrupt(true);
                         this.Pausa.setProcessSwitch(true);
                     }
-                }
+                } else{
+                    System.out.println("terminado");
                 this.Pausa.setHasInterrupt(true);
                 this.Pausa.setProcessSwitch(true);
-                System.out.println("A");
+                }
                 
             }
         }

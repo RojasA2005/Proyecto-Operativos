@@ -17,8 +17,8 @@ int quantum;
      * Creates new form MainFrame
      */
     public MainFrame() {
-        this.Procesador = new CPU(1000, 100);
-        this.quantum = 0;
+        this.Procesador = new CPU(1000, 250);
+        this.quantum = 3000;
         initComponents();
     }
 
