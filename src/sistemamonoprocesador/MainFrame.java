@@ -12,11 +12,13 @@ import ComponenteOS.CPU;
  */
 public class MainFrame extends javax.swing.JFrame {
 CPU Procesador;
+int quantum;
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         this.Procesador = new CPU(1000, 100);
+        this.quantum = 0;
         initComponents();
     }
 
@@ -110,6 +112,7 @@ CPU Procesador;
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jSlider1.setMaximum(10000);
+        jSlider1.setMinimum(1);
         jSlider1.setValue(2000);
         jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -118,10 +121,22 @@ CPU Procesador;
         });
 
         jSlider2.setMaximum(5000);
+        jSlider2.setMinimum(1);
         jSlider2.setValue(3000);
+        jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider2StateChanged(evt);
+            }
+        });
 
         jSlider3.setMaximum(500);
+        jSlider3.setMinimum(1);
         jSlider3.setValue(250);
+        jSlider3.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider3StateChanged(evt);
+            }
+        });
 
         jLabel7.setText("Quantum de tiempo (en ms): 3000");
 
@@ -277,9 +292,29 @@ CPU Procesador;
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-        
+        if (!jSlider1.getValueIsAdjusting()) {
+        int value = jSlider1.getValue();
+        jLabel8.setText("Tiempo Por Ciclo (en ms): " + value);
+        this.Procesador.setTime_per_cycle(value);
+    }
         // TODO add your handling code here:
     }//GEN-LAST:event_jSlider1StateChanged
+
+    private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
+        if (!jSlider2.getValueIsAdjusting()) {
+        int value = jSlider2.getValue();
+        jLabel7.setText("Quantum de tiempo (en ms): " + value);
+        this.quantum = value;
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_jSlider2StateChanged
+
+    private void jSlider3StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider3StateChanged
+        if (!jSlider3.getValueIsAdjusting()) {
+        int value = jSlider3.getValue();
+        jLabel9.setText("Memoria: " + value);
+        this.Procesador.setMemoria(value);
+    }// TODO add your handling code here:
+    }//GEN-LAST:event_jSlider3StateChanged
 
     /**
      * @param args the command line arguments
